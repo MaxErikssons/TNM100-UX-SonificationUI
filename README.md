@@ -1,2 +1,2 @@
-NM100-UX-SonificationUI
+TNM100-UX-SonificationUI
 User Interface for Sonification
