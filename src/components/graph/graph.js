@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   LineChart,
   Line,
@@ -10,6 +10,7 @@ import {
   Legend,
   ResponsiveContainer,
   ReferenceLine,
+  Cell,
 } from 'recharts';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
@@ -33,17 +34,59 @@ const marks = data.map((entry, index) => ({ value: index, label: entry.name }));
 
 const Graph = () => {
   const [chartType, setChartType] = useState('line');
-  const [selectedDataIndex, setSelectedDataIndex] = useState(null);
+  const [selectedDataIndex, setSelectedDataIndex] = useState(data.length / 2);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [reverse, setReverse] = useState(false);
+  const intervalRef = useRef();
 
   const handleSliderChange = (value) => {
     setSelectedDataIndex(value);
+    setIsPlaying(false);
   };
+
+  const handlePlayButtonClick = () => {
+    setIsPlaying(true);
+  };
+
+  const handlePauseButtonClick = () => {
+    setIsPlaying(false);
+  };
+
+  const handleReverseButtonClick = () => {
+    setReverse(!reverse);
+    setIsPlaying(true);
+  };
+
+  useEffect(() => {
+    if (isPlaying) {
+      intervalRef.current = setInterval(() => {
+        setSelectedDataIndex((prevIndex) =>
+          reverse
+            ? prevIndex === data.length - 1
+              ? 0
+              : prevIndex + 1
+            : prevIndex === 0
+            ? data.length - 1
+            : prevIndex - 1
+        );
+      }, 300);
+    } else {
+      clearInterval(intervalRef.current);
+    }
+
+    return () => clearInterval(intervalRef.current);
+  }, [isPlaying, reverse]);
 
   const renderChart = () => {
     const selectedData = data[selectedDataIndex];
     if (chartType === 'line') {
       return (
-        <LineChart data={data}>
+        <LineChart
+          data={data}
+          onMouseMove={(e) => {
+            if (e.isTooltipActive) setSelectedDataIndex(e.activeTooltipIndex);
+          }}
+        >
           <XAxis dataKey='name' />
           <YAxis />
           <Tooltip />
@@ -74,19 +117,24 @@ const Graph = () => {
       );
     } else {
       return (
-        <BarChart data={data}>
+        <BarChart
+          data={data}
+          onMouseMove={(e) => {
+            if (e.isTooltipActive) setSelectedDataIndex(e.activeTooltipIndex);
+          }}
+        >
           <XAxis dataKey='name' />
           <YAxis />
           <Tooltip />
-          <Legend />
-          <Bar dataKey='value' fill='#ff7300' />
-          {selectedData && (
-            <ReferenceLine
-              x={selectedData.name}
-              strokeDasharray='3 3'
-              stroke='black'
-            />
-          )}
+          <Legend verticalAlign='top' align='right' />
+          <Bar dataKey='value'>
+            {data.map((entry, index) => (
+              <Cell
+                key={`cell-${index}`}
+                fill={selectedDataIndex === index ? 'blue' : 'gray'}
+              />
+            ))}
+          </Bar>
         </BarChart>
       );
     }
@@ -109,6 +157,9 @@ const Graph = () => {
       >
         <button onClick={() => setChartType('line')}>Line Chart</button>
         <button onClick={() => setChartType('bar')}>Bar Chart</button>
+        <button onClick={() => handlePlayButtonClick()}>Play</button>
+        <button onClick={() => handlePauseButtonClick()}>Pause</button>
+        <button onClick={() => handleReverseButtonClick()}>Reverse</button>
       </div>
       <ResponsiveContainer style={{ backgroundColor: 'orange' }}>
         {renderChart()}
@@ -116,8 +167,8 @@ const Graph = () => {
       <div
         style={{
           marginTop: '20px',
-          width: '96%',
-          marginLeft: '4%',
+          width: '95%',
+          marginLeft: '5%',
         }}
       >
         <Slider
@@ -128,14 +179,14 @@ const Graph = () => {
           onChange={handleSliderChange}
           value={selectedDataIndex}
           railStyle={{
-            backgroundColor: 'purple', // Change the color of the rail
+            backgroundColor: 'gray', // Change the color of the rail
           }}
           trackStyle={{
-            backgroundColor: 'orange', // Change the color of the track
+            backgroundColor: 'gray', // Change the color of the track
           }}
           handleStyle={{
-            borderColor: 'blue', // Change the color of the circle inside the slider
-            backgroundColor: 'white', // Change the background color of the circle inside the slider
+            borderColor: 'purple', // Change the color of the circle inside the slider
+            backgroundColor: 'orange', // Change the background color of the circle inside the slider
           }}
         />
       </div>
