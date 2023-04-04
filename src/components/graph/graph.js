@@ -142,12 +142,10 @@ const Graph = () => {
   return (
     <div
       style={{
-        height: '70%',
-        width: '80%',
         flex: 1,
+        width: '80%',
         marginLeft: 'auto',
         marginRight: 'auto',
-        marginTop: '2vw',
         textAlign: 'center',
         fontSize: '24px',
       }}
@@ -156,7 +154,6 @@ const Graph = () => {
         style={{
           display: 'flex',
           justifyContent: 'center',
-          marginTop: '20px',
         }}
       >
         <button onClick={() => setChartType('line')}>Line Chart</button>
@@ -165,9 +162,9 @@ const Graph = () => {
         <button onClick={() => handlePauseButtonClick()}>Pause</button>
         <button onClick={() => handleReverseButtonClick()}>Reverse</button>
       </div>
-      <ResponsiveContainer style={{ backgroundColor: 'orange' }}>
+        <ResponsiveContainer width="95%" height={data.length*33}>
         {renderChart()}
-      </ResponsiveContainer>
+        </ResponsiveContainer>
       <div
         style={{
           marginTop: '20px',
