@@ -144,8 +144,12 @@ const Graph = () => {
       style={{
         height: '70%',
         width: '80%',
-        marginLeft: '3%',
-        marginTop: '4vh',
+        flex: 1,
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        marginTop: '2vw',
+        textAlign: 'center',
+        fontSize: '24px',
       }}
     >
       <div

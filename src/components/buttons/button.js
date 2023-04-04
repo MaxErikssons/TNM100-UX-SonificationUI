@@ -1,4 +1,3 @@
-import './button.css';
 import { useState } from 'react';
 
 const Button = ({ props }) => {
@@ -7,7 +6,12 @@ const Button = ({ props }) => {
 
   const getButtonStyles = (index) => {
     if (spread) {
-      return { ...getActiveButton(index + 1), borderRadius: '10px' };
+      return {
+        ...getActiveButton(index + 1),
+        borderRadius: '10px',
+        height: 50,
+        width: '100%',
+      };
     }
 
     const isFirst = index + 1 === 1;
@@ -15,11 +19,13 @@ const Button = ({ props }) => {
 
     return {
       ...getActiveButton(index + 1),
-      borderLeft: !isFirst && 'black solid 1px',
+      borderLeft: !isFirst && 'gray solid 1px',
       borderTopLeftRadius: isFirst && '15px',
       borderBottomLeftRadius: isFirst && '15px',
       borderTopRightRadius: isLast && '15px',
       borderBottomRightRadius: isLast && '15px',
+      height: 50,
+      width: '100%',
     };
   };
 
@@ -30,33 +36,32 @@ const Button = ({ props }) => {
         boxShadow: 'none',
       };
     } else {
-      return -{ background: '#D9D9D9', boxShadow: '0px 4px 0px #6A6969' };
+      return { backgroundColor: '#D9D9D9', boxShadow: '0px 4px 0px #6A6969' };
     }
   };
 
   return (
     <div
-      className='settingContainer'
-      style={{ width: settings.length * 5 + '%' }}
+      style={{
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        width: '100%',
+      }}
     >
-      <div className='buttonHeader'>{header}</div>
-      <div className='settingContent' style={{ background: background }}>
-        <div className='buttonContainer'>
-          {settings.map((setting, index) => (
-            <div
-              key={index}
-              className='buttonContent'
-              style={{
-                marginLeft: spread && '10px',
-                marginRight: spread && '10px',
-              }}
-            >
-              <div>{setting}</div>
-              <div className='button' style={getButtonStyles(index)}></div>
-            </div>
-          ))}
+      {settings.map((setting, index) => (
+        <div
+          key={index}
+          style={{
+            marginLeft: spread && '10px',
+            marginRight: spread && '10px',
+            width: '100%',
+          }}
+        >
+          <div>{setting}</div>
+          <div style={getButtonStyles(index)}></div>
         </div>
-      </div>
+      ))}
     </div>
   );
 };

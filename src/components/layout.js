@@ -3,17 +3,15 @@ import Graph from './graph/graph';
 
 const Layout = () => {
   const container = {
-    background: '#DBDBDB',
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100vh',
     width: '100%',
-    height: '61%',
-    position: 'absolute',
   };
 
   return (
-    <div>
-      <div style={container}>
-        <Graph />
-      </div>
+    <div style={container}>
+      <Graph />
       <Settings />
     </div>
   );
