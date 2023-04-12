@@ -8,7 +8,7 @@ const Slider = ({ mapIndexToName, singleType }) => {
   const [index, setIndex] = useState(0);
   const dispatch = useDispatch();
   const listLength = 3;
-  const height = 60;
+  const height = 50;
   const arrowHeight = 25;
   const arrowWidth = 20;
 
@@ -29,7 +29,13 @@ const Slider = ({ mapIndexToName, singleType }) => {
     else dispatch(updateFlag(mapIndexToName[e].id, e + 1));
   };
   return (
-    <div>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        flexDirection: 'column',
+      }}
+    >
       <div style={row}>
         <div
           onClick={handlePrev}
@@ -137,7 +143,6 @@ const btnStyles = {
 const header = {
   fontWeight: 'bold',
   color: 'white',
-  marginTop: '2%',
 };
 
 const row = { display: 'flex', flexDirection: 'row' };

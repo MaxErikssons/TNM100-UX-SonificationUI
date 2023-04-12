@@ -92,14 +92,15 @@ const Graph = () => {
 
   const onMoveMouse = (e) => {
     if (e.isTooltipActive) {
-      // sendMessage();
+      dispatch(updateFlag('graphValue', e.activeTooltipIndex));
+      sendMessage();
       setSelectedDataIndex(e.activeTooltipIndex);
     }
   };
 
   const onGraphClick = (e) => {
     if (e.activeTooltipIndex) {
-      dispatch(updateFlag('graphVal', e.activeTooltipIndex));
+      dispatch(updateFlag('graphValue', e.activeTooltipIndex));
       sendMessage();
       setSelectedDataIndex(e.activeTooltipIndex);
     }
@@ -127,13 +128,15 @@ const Graph = () => {
             ? data.length - 1
             : prevIndex - 1
         );
-      }, 300);
+        dispatch(updateFlag('graphValue', selectedDataIndex));
+        sendMessage();
+      }, 100);
     } else {
       clearInterval(intervalRef.current);
     }
 
     return () => clearInterval(intervalRef.current);
-  }, [isPlaying, reverse]);
+  }, [isPlaying, reverse, selectedDataIndex]);
 
   const renderChart = () => {
     const selectedData = data[selectedDataIndex];
@@ -145,12 +148,15 @@ const Graph = () => {
             type='number'
             domain={['dataMin', 'dataMax']}
             tickCount={10}
+            tick={{ dy: 10 }}
           />
           <YAxis
             dataKey='value'
             type='number'
             domain={[0, roundedMax]}
             tickCount={10}
+            tick={{ dx: -10 }}
+            width={100}
           />
           <Tooltip />
           <Legend verticalAlign='top' align='right' />
@@ -191,12 +197,14 @@ const Graph = () => {
             type='number'
             domain={['dataMin', 'dataMax']}
             tickCount={10}
+            tick={{ dy: 10 }}
           />
           <YAxis
             dataKey='value'
             type='number'
             domain={[0, roundedMax]}
             tickCount={10}
+            tick={{ dx: -10 }}
           />
           <Tooltip />
           <Legend verticalAlign='top' align='right' />
@@ -215,8 +223,8 @@ const Graph = () => {
   return (
     <div
       style={{
-        flex: 1,
-        width: '80%',
+        flex: 5,
+        width: '100%',
         marginLeft: 'auto',
         marginRight: 'auto',
         textAlign: 'center',
@@ -226,7 +234,7 @@ const Graph = () => {
       <div
         style={{
           display: 'flex',
-          justifyContent: 'center',
+          justifyContent: 'flex-start',
         }}
       >
         <button onClick={() => setChartType('line')}>Line Chart</button>
@@ -236,13 +244,16 @@ const Graph = () => {
         <button onClick={() => handleReverseButtonClick()}>Reverse</button>
       </div>
 
-      <ResponsiveContainer height={'80%'}>{renderChart()}</ResponsiveContainer>
+      <ResponsiveContainer height='75%' width='80%'>
+        {renderChart()}
+      </ResponsiveContainer>
 
       <div
         style={{
           marginTop: '20px',
-          width: '95%',
-          marginLeft: '5%',
+          width: 'calc(80% - 100px)',
+          marginLeft: 100,
+          marginRight: 100,
           marginBottom: '5%',
         }}
       >

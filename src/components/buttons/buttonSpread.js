@@ -56,6 +56,7 @@ const ButtonSpread = ({ setting }) => {
             position: 'relative',
             ...getButtonStyles(),
             ...activeStyle(),
+            padding: '5%',
           }}
         >
           <div

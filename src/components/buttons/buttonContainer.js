@@ -1,9 +1,15 @@
-const ButtonContainer = ({ children, title, backgroudColor, radius = 21 }) => {
+const ButtonContainer = ({
+  children,
+  title,
+  backgroudColor,
+  radius = 21,
+  flex = 1,
+}) => {
   return (
     <div
       style={{
         textAlign: 'center',
-        flex: 1,
+        flex,
       }}
     >
       <div style={{ color: 'white', fontWeight: '500', fontSize: 16 }}>

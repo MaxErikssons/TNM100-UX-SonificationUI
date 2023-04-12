@@ -48,6 +48,7 @@ const Button = ({ setting, isFirst, isLast }) => {
           style={{
             ...getButtonStyles(),
             ...activeStyle(),
+            padding: '5%',
           }}
         >
           <div
@@ -58,6 +59,7 @@ const Button = ({ setting, isFirst, isLast }) => {
               class='topBorder'
               style={{ borderColor: inverseActive ? 'black' : 'white' }}
             ></div>
+
             <IoIcon
               id='ioicon'
               color={buttonActive ? '#00FF00' : '#000000'}

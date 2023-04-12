@@ -188,11 +188,47 @@ OSCdef.new(\Dataset,
 		~data2SonFlag = msg[39];
 		~graphValue = msg[40];
 
+		~pitchFlag.postln;
 		~waveForm.postln;
 		~graphValue.postln;
 
+
 		//Shameless test make on press later
 		~sonificationVoice.set(\t_trig, 1, \gate, 1);
+
+		if (~waveForm == 1) {
+				~sineLevel = 1;
+				~triLevel = 0;
+				~squareLevel = 0;
+				~sawLevel = 0;
+			} {
+				if (~waveForm == 2) {
+					~sineLevel = 0;
+					~triLevel = 1;
+					~squareLevel = 0;
+					~sawLevel = 0;
+				} {
+					if (~waveForm == 3) {
+						~sineLevel = 0;
+						~triLevel = 0;
+						~squareLevel = 1;
+						~sawLevel = 0;
+					} {
+						if (~waveForm == 4) {
+							~sineLevel = 0;
+							~triLevel = 0;
+							~squareLevel = 0;
+							~sawLevel = 1;
+						} {
+							~sineLevel = 0;
+							~triLevel = 0;
+							~squareLevel = 0;
+							~sawLevel = 0;
+						};
+					};
+				};
+			};
+		~squareLevel.postln;
 
 		if (~currentFilter != ~oldFilter) {
 				~lagTime = 1;
@@ -203,6 +239,7 @@ OSCdef.new(\Dataset,
 			if ((~pitchFlag == 1) || (~pitchQuantFlag== 1)) {
 				~pitch = ~mapPitch.value(~graphValue);
 
+
 				~graphValue.postln;
 
 			} {
@@ -210,6 +247,8 @@ OSCdef.new(\Dataset,
 			};
 			if ((~harmonyFlag == 1) || (~chordFlag == 1)) {
 				~pitch1 = ~mapPitch1.value(~pitch, ~graphValue);
+
+
 				~pitch2 = ~mapPitch2.value(~pitch, ~graphValue);
 			} {
 				~pitch1 = ~pitch;

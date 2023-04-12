@@ -28,11 +28,11 @@ const Settings = () => {
     display: 'flex',
     flexDirection: 'row',
     width: '100%',
-    border: 'solid',
+    height: '100%',
   };
 
   return (
-    <div>
+    <div style={{ flex: 3 }}>
       <div style={bar}>
         <div style={getActiveSetting(1)}>Ljudinställning</div>
         <div style={getActiveSetting(2)}>Grafinställning</div>
@@ -43,7 +43,7 @@ const Settings = () => {
           display: 'flex',
           backgroundColor: '#585858',
           flexDirection: 'row',
-          padding: '1%',
+          height: '100%',
         }}
       >
         <div
@@ -51,11 +51,16 @@ const Settings = () => {
             display: 'flex',
             width: '15%',
             justifyContent: 'center',
+            alignItems: 'center',
             flexDirection: 'column',
-            border: 'solid',
           }}
         >
-          <ButtonContainer backgroudColor={'grey'} title='Vågform' radius={40}>
+          <ButtonContainer
+            backgroudColor={'grey'}
+            title='Vågform'
+            radius={40}
+            flex={1}
+          >
             <Slider
               mapIndexToName={{
                 0: { name: 'Sinus', id: 'waveForm' },
@@ -65,7 +70,12 @@ const Settings = () => {
               }}
             />
           </ButtonContainer>
-          <ButtonContainer backgroudColor={'grey'} title='Tonhöjd' radius={40}>
+          <ButtonContainer
+            backgroudColor={'grey'}
+            title='Tonhöjd'
+            radius={40}
+            flex={1}
+          >
             <Slider
               mapIndexToName={{
                 0: { name: 'Frekvens', id: 'pitchFlag' },
@@ -86,7 +96,7 @@ const Settings = () => {
           }}
         >
           <div style={row}>
-            <ButtonContainer backgroudColor={'#FFEEBB'} title='Filter'>
+            <ButtonContainer backgroudColor={'#FFEEBB'} title='Filter' flex={3}>
               <ButtonGroup
                 props={{
                   settings: [
@@ -98,7 +108,11 @@ const Settings = () => {
                 }}
               />
             </ButtonContainer>
-            <ButtonContainer backgroudColor={'#FFBBD2'} title='Rumseffekt'>
+            <ButtonContainer
+              backgroudColor={'#FFBBD2'}
+              title='Rumseffekt'
+              flex={2}
+            >
               <ButtonGroup
                 props={{
                   settings: [
@@ -113,7 +127,11 @@ const Settings = () => {
                 }}
               />
             </ButtonContainer>
-            <ButtonContainer backgroudColor={'#A880AF'} title='Ljudvolym'>
+            <ButtonContainer
+              backgroudColor={'#A880AF'}
+              title='Ljudvolym'
+              flex={3}
+            >
               <ButtonGroup
                 props={{
                   settings: [
@@ -135,7 +153,6 @@ const Settings = () => {
                 width: '10%',
                 justifyContent: 'center',
                 alignContent: 'center',
-                border: 'solid',
               }}
             >
               <div>
@@ -144,7 +161,11 @@ const Settings = () => {
             </div>
           </div>
           <div style={row}>
-            <ButtonContainer backgroudColor={'#FFBCA7'} title='Harmoni'>
+            <ButtonContainer
+              backgroudColor={'#FFBCA7'}
+              title='Harmoni'
+              flex={2}
+            >
               <ButtonGroup
                 props={{
                   settings: [
@@ -163,7 +184,7 @@ const Settings = () => {
                 }}
               />
             </ButtonContainer>
-            <ButtonContainer backgroudColor={'#FB9891'} title='Brus'>
+            <ButtonContainer backgroudColor={'#FB9891'} title='Brus' flex={3}>
               <ButtonGroup
                 props={{
                   settings: [
@@ -193,7 +214,11 @@ const Settings = () => {
                 }}
               />
             </ButtonContainer>
-            <ButtonContainer backgroudColor={'#F28880'} title='Tidaspekter'>
+            <ButtonContainer
+              backgroudColor={'#F28880'}
+              title='Tidaspekter'
+              flex={2}
+            >
               <ButtonGroup
                 props={{
                   settings: [
@@ -212,7 +237,11 @@ const Settings = () => {
                 }}
               />
             </ButtonContainer>
-            <ButtonContainer backgroudColor={'#9ED1F9'} title='Klangfärg'>
+            <ButtonContainer
+              backgroudColor={'#9ED1F9'}
+              title='Klangfärg'
+              flex={3}
+            >
               <ButtonGroup
                 props={{
                   settings: [
