@@ -2074,6 +2074,231 @@ o = OSCFunc({ arg msg, time, addr, recvPort;
 }, '/mousePosition');
 
 
+NetAddr.langPort;
+NetAddr.localAddr;
+
+
+//Hämta state och fixa allt men just ny disableas allt också...
+OSCdef.new(\Dataset,
+	{
+	arg msg;
+		~test = "We got a message!";
+		~test.postln;
+		msg.postln;
+		~pitchFlag = msg[2];
+		~pitchInvFlag = msg[3];
+		~pitchQuantFlag = msg[4];
+		~amplitudeFlag = msg[5];
+		~amplitudeInvFlag = msg[6];
+		~amplitudeSusFlag = msg[7];
+		~amplitudeModFlag = msg[8];
+		~amplitudeModInvFlag = msg[9];
+		~wavemixFlag = msg[10];
+		~wavemixInvFlag = msg[11];
+		~attackFlag = msg[12];
+		~attackInvFlag = msg[13];
+		~releaseFlag = msg[14];
+		~releaseInvFlag = msg[15];
+		~clipFlag = msg[16];
+		~clipInvFlag = msg[17];
+		~noiseFlag = msg[18];
+		~noiseType = msg[19];
+		~waveForm = msg[20];
+		~lpfFlag = msg[21];
+		~lpfInvFlag = msg[22];
+		~bpfFlag = msg[23];
+		~bpfInvFlag = msg[24];
+		~hpfFlag = msg[25];
+		~hpfInvFlag = msg[26];
+		~harmonyFlag = msg[27];
+		~harmonyInvFlag = msg[28];
+		~chordFlag = msg[29];
+		~chordInvFlag = msg[30];
+		~reverbFlag = msg[31];
+		~reverbInvFlag = msg[32];
+		~delayFlag = msg[33];
+		~delayInvFlag = msg[34];
+		~pwFlag = msg[35];
+		~pwInvFlag = msg[36];
+		~data1Flag = msg[37];
+		~data2Flag = msg[38];
+		~data2SonFlag = msg[39];
+		~graphValue = msg[40];
+
+		~waveForm.postln;
+		~graphValue.postln;
+
+		//Shameless test make on press later
+		~sonificationVoice.set(\t_trig, 1, \gate, 1);
+
+		if (~currentFilter != ~oldFilter) {
+				~lagTime = 1;
+				~oldFilter = ~currentFilter;
+			} {
+				~lagTime = 0.01;
+			};
+			if ((~pitchFlag == 1) || (~pitchQuantFlag== 1)) {
+				~pitch = ~mapPitch.value(~graphValue);
+
+				~graphValue.postln;
+
+			} {
+				~pitch = 440;
+			};
+			if ((~harmonyFlag == 1) || (~chordFlag == 1)) {
+				~pitch1 = ~mapPitch1.value(~pitch, ~graphValue);
+				~pitch2 = ~mapPitch2.value(~pitch, ~graphValue);
+			} {
+				~pitch1 = ~pitch;
+				~pitch2 = ~pitch;
+			};
+			if (~amplitudeFlag== 1) {
+				~soundlevel = ~mapAmplitude.value(~graphValue);
+			} {
+				~soundlevel = 0.5;
+			};
+			if (~wavemixFlag== 1) {
+				~wavemix = ~mapWavemix.value(~graphValue);
+				~sineLevel = 0;
+				~triLevel = 0;
+				~squareLevel = 0;
+				~sawLevel = 0;
+				~timbreMixLevel = 1;
+			} {
+				~wavemix = 0;
+				~timbreMixLevel = 0;
+			};
+			if (~pwFlag== 1) {
+				~pw = ~mapPw.value(~graphValue);
+				~sineLevel = 0;
+				~triLevel = 0;
+				~squareLevel = 1;
+				~sawLevel = 0;
+			} {
+				~pw = 0.5;
+			};
+			if (~attackFlag== 1) {
+				~attack = ~mapAttack.value(~graphValue);
+			} {
+				~attack = 0.001;
+			};
+			if (~releaseFlag== 1) {
+				~release = ~mapRelease.value(~graphValue);
+			} {
+				~release = 0.5;
+			};
+			if (~clipFlag== 1) {
+				~clip = ~mapClip.value(~graphValue);
+			} {
+				~clip = 1;
+			};
+			if (~noiseFlag== 1) {
+				~noise = 1;
+			} {
+				~noise = 0;
+			};
+			if (~noiseType == 1) {
+				~whiteNoiseLevel = 0.5;
+				~pinkNoiseLevel = 0;
+				~crackleNoiseLevel = 0;
+			} {
+				if (~noiseType == 2) {
+					~whiteNoiseLevel = 0;
+					~pinkNoiseLevel = 1;
+					~crackleNoiseLevel = 0;
+				} {
+					if (~noiseType == 3) {
+						~whiteNoiseLevel = 0;
+						~pinkNoiseLevel = 0;
+						~crackleNoiseLevel = 1;
+					};
+				};
+			};
+			if (~amplitudeModFlag== 1) {
+				~amplitudeMod = ~mapAmplitudeMod.value(~graphValue);
+				~amplitudeModFreq = ~mapAmplitudeModFreq.value(~graphValue);
+			} {
+				~amplitudeMod = 1;
+				~amplitudeModFreq = 1;
+			};
+			if (~amplitudeSusFlag== 1) {
+				~sustain = 1;
+			} {
+				~sustain = 0;
+			};
+
+			if (~lpfFlag== 1) {
+				~lpfLevel = 1;
+				~lpfCutoff = ~maplpfCutoff.value(~graphValue);
+				if (abs(~lpfCutoff - ~oldFreq) > 4000) {
+					~filterLag = 1;
+				} {
+					~filterLag = 0.01;
+				};
+				~oldFreq = ~lpfCutoff;
+			} {
+				~lpfLevel = 0;
+			};
+			if (~bpfFlag== 1) {
+				~bpfLevel = 1;
+				~bpfCutoff = ~mapbpfCutoff.value(~graphValue);
+				if (abs(~bpfCutoff - ~oldFreq) > 4000) {
+					~filterLag = 1;
+				} {
+					~filterLag = 0.01;
+				};
+				~oldFreq = ~bpfCutoff;
+			} {
+				~bpfLevel = 0;
+			};
+			if (~hpfFlag== 1) {
+				~hpfLevel = 1;
+				~hpfCutoff = ~maphpfCutoff.value(~graphValue);
+				if (abs(~hpfCutoff - ~oldFreq) > 4000) {
+					~filterLag = 1;
+				} {
+					~filterLag = 0.01;
+				};
+				~oldFreq = ~hpfCutoff;
+			} {
+				~hpfLevel = 0;
+			};
+			if ((~lpfFlag== 1) || (~bpfFlag== 1) || (~hpfFlag== 1)) {
+				~mixedSoundLevel = 0;
+			} {
+				~mixedSoundLevel = 1;
+			};
+			if (~reverbFlag== 1) {
+				~reverbMix = ~mapreverbMix.value(~graphValue);
+				~reverberation  = ~mapreverberation.value(~graphValue);
+			} {
+				~reverbMix = 0.1;
+				~reverberation = 0.5;
+			};
+			if (~delayFlag== 1) {
+				~delayTime = ~mapdelayTime.value(~graphValue);//0.33;
+				~decay = ~mapdecay.value(~graphValue);//0.5;
+				~delayLevel = 1;
+			} {
+				~delayLevel = 0;
+			};
+
+
+
+
+
+
+
+
+			~sonificationVoice.set(\frequency, ~pitch, \frequency1, ~pitch1, \frequency2, ~pitch2, \soundlevel, ~soundlevel, \wavemix, ~wavemix, \attack, ~attack, \release, ~release, \clip, ~clip, \noiselevel, ~noise, \lfoLevel, ~amplitudeMod, \lfoFreq, ~amplitudeModFreq, \pinkNoiseLevel, ~pinkNoiseLevel, \whiteNoiseLevel, ~whiteNoiseLevel, \crackleNoiseLevel, ~crackleNoiseLevel, \sustain, ~sustain, \timbreMixLevel, ~timbreMixLevel, \sineLevel, ~sineLevel, \triLevel, ~triLevel, \squareLevel, ~squareLevel, \sawLevel, ~sawLevel, \mixedSoundLevel, ~mixedSoundLevel, \lpfLevel, ~lpfLevel, \bpfLevel, ~bpfLevel, \hpfLevel, ~hpfLevel, \lpfCutoff, ~lpfCutoff, \bpfCutoff, ~bpfCutoff, \hpfCutoff, ~hpfCutoff, \pw, ~pw, \lagTime, ~lagTime, \filterLag, ~filterLag);
+			~outputVoice.set(\reverbMix, ~reverbMix, \reverberation, ~reverberation, \delayTime, ~delayTime, \decay, ~decay, \delayLevel, ~delayLevel);
+		};
+
+
+
+	, '/dataset');
+
+
 
 
 ~mapPitch = { arg position;
@@ -2314,66 +2539,8 @@ CmdPeriod.doOnce({
 	//s.quit;
 });
 
-NetAddr.langPort;
-NetAddr.localAddr;
-
-(
-
-OSCdef.new(\Dataset,
-	{
-	arg msg;
-
-		~dataset = msg[1].asString;
-	~dataset.postln;
-		~waveForm = msg[2];
-
-		~test = "vi är här";
-		~test.postln;
-		~waveForm.postln;
-
-		if (~waveForm == 1) {
-				~sineLevel = 1;
-				~triLevel = 0;
-				~squareLevel = 0;
-				~sawLevel = 0;
-			} {
-				if (~waveForm == 2) {
-					~sineLevel = 0;
-					~triLevel = 1;
-					~squareLevel = 0;
-					~sawLevel = 0;
-				    ~triLevel.postln;
-				} {
-					if (~waveForm == 3) {
-						~sineLevel = 0;
-						~triLevel = 0;
-						~squareLevel = 1;
-						~sawLevel = 0;
-					} {
-						if (~waveForm == 4) {
-							~sineLevel = 0;
-							~triLevel = 0;
-							~squareLevel = 0;
-							~sawLevel = 1;
-						} {
-							~sineLevel = 0;
-							~triLevel = 0;
-							~squareLevel = 0;
-							~sawLevel = 0;
-						};
-					};
-				};
-			};
-~test = "Nu setter vi sonification voice";
-		~test.postln;
-		~sonificationVoice.set( \sineLevel, ~sineLevel, \triLevel, ~triLevel, \squareLevel, ~squareLevel, \sawLevel, ~sawLevel);
 
 
-	}, '/dataset'
-
-);
-
-)
 
 
 )
