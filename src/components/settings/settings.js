@@ -65,7 +65,7 @@ const Settings = () => {
               }}
             />
           </ButtonContainer>
-          <ButtonContainer backgroudColor={'grey'} title='Toner' radius={40}>
+          <ButtonContainer backgroudColor={'grey'} title='Tonhöjd' radius={40}>
             <Slider
               mapIndexToName={{
                 0: { name: 'Frekvens', id: 'pitchFlag' },
