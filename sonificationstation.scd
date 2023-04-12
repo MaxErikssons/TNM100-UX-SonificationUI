@@ -1857,6 +1857,12 @@ Synth.new(\sendMouse);
 
 
 
+
+
+
+NetAddr.langPort;
+NetAddr.localAddr;
+
 ~filterLag = 0.01;
 ~graphYPos = ~windowHeight - w.bounds.height + ~graphView.bounds.top;
 ~oldData;
@@ -1867,217 +1873,6 @@ Synth.new(\sendMouse);
 ~wLeft = w.bounds.left;
 ~wTop = w.bounds.top;
 ~xStepSize = 0;
-o = OSCFunc({ arg msg, time, addr, recvPort;
-	var mouseXPos = 0;
-	var mouseYPos = 0;
-	var insideGraph, newData;
-	if (~graphType == 1) {
-		mouseXPos = (msg[3] - ~wLeft) - (~xStepSize / 2);
-	} {
-		mouseXPos = (msg[3] - ~wLeft);
-	};
-	mouseYPos = (msg[4] + ~wTop);
-	insideGraph = (mouseXPos >= ~margin) && (mouseXPos <= ~graphWidth) && (mouseYPos >= (~graphYPos + ~margin)) && (mouseYPos <= (~graphYPos + ~graphHeight - ~margin));
-	newData = ((mouseXPos - ~margin) / ~xStepSize).round;
-
-	if (insideGraph) {
-		if (newData != ~oldData) {
-			~keyPressed = true;
-			~oldData = newData;
-			if (data[newData] != nil) {
-				var yPos;
-				if (data2SonFlag) {
-					yPos = (data[newData] * ~yStepSize * 2);
-				} {
-					yPos = (data[newData] * ~yStepSize);
-				};
-				switch (~graphType,
-					0, {
-						{~markerView.moveTo((~margin + (newData * ~xStepSize) - (~markerSize / 2)), (~graphHeight - ~margin - yPos - (~markerSize / 2)))}.defer;
-					},
-					1, {
-						{~markerView.moveTo((~margin + (newData * ~xStepSize) + (~xStepSize / 2) - (~markerSize / 2)), (~graphHeight - ~margin - yPos - (~markerSize / 2)))}.defer;
-				});
-			};
-		};
-		if ((msg[5] == 1) && (~keyPressed)){
-			~keyPressed = false;
-			{~markerView.visible_(true)}.defer;
-			~sonificationVoice.set(\t_trig, 1, \gate, 1);
-		} {
-			if (msg[5] == 0) {
-				~keyPressed = true;
-				{~markerView.visible_(false)}.defer;
-				~sonificationVoice.set(\t_trig, 0, \gate, 0);
-			};
-		};
-		if ((~keyPressed == false) && (data[newData] != nil)){
-
-
-			if (~currentFilter != ~oldFilter) {
-				~lagTime = 1;
-				~oldFilter = ~currentFilter;
-			} {
-				~lagTime = 0.01;
-			};
-			if ((pitchFlag) || (pitchQuantFlag)) {
-				~pitch = ~mapPitch.value(newData);
-
-				newData.postln;
-
-			} {
-				~pitch = 440;
-			};
-			if ((harmonyFlag) || (chordFlag)) {
-				~pitch1 = ~mapPitch1.value(~pitch, newData);
-				~pitch2 = ~mapPitch2.value(~pitch, newData);
-			} {
-				~pitch1 = ~pitch;
-				~pitch2 = ~pitch;
-			};
-			if (amplitudeFlag) {
-				~soundlevel = ~mapAmplitude.value(newData);
-			} {
-				~soundlevel = 0.5;
-			};
-			if (wavemixFlag) {
-				~wavemix = ~mapWavemix.value(newData);
-				~sineLevel = 0;
-				~triLevel = 0;
-				~squareLevel = 0;
-				~sawLevel = 0;
-				~timbreMixLevel = 1;
-			} {
-				~wavemix = 0;
-				~timbreMixLevel = 0;
-			};
-			if (pwFlag) {
-				~pw = ~mapPw.value(newData);
-				~sineLevel = 0;
-				~triLevel = 0;
-				~squareLevel = 1;
-				~sawLevel = 0;
-			} {
-				~pw = 0.5;
-			};
-			if (attackFlag) {
-				~attack = ~mapAttack.value(newData);
-			} {
-				~attack = 0.001;
-			};
-			if (releaseFlag) {
-				~release = ~mapRelease.value(newData);
-			} {
-				~release = 0.5;
-			};
-			if (clipFlag) {
-				~clip = ~mapClip.value(newData);
-			} {
-				~clip = 1;
-			};
-			if (noiseFlag) {
-				~noise = 1;
-			} {
-				~noise = 0;
-			};
-			if (noiseType == 1) {
-				~whiteNoiseLevel = 0.5;
-				~pinkNoiseLevel = 0;
-				~crackleNoiseLevel = 0;
-			} {
-				if (noiseType == 2) {
-					~whiteNoiseLevel = 0;
-					~pinkNoiseLevel = 1;
-					~crackleNoiseLevel = 0;
-				} {
-					if (noiseType == 3) {
-						~whiteNoiseLevel = 0;
-						~pinkNoiseLevel = 0;
-						~crackleNoiseLevel = 1;
-					};
-				};
-			};
-			if (amplitudeModFlag) {
-				~amplitudeMod = ~mapAmplitudeMod.value(newData);
-				~amplitudeModFreq = ~mapAmplitudeModFreq.value(newData);
-			} {
-				~amplitudeMod = 1;
-				~amplitudeModFreq = 1;
-			};
-			if (amplitudeSusFlag) {
-				~sustain = 1;
-			} {
-				~sustain = 0;
-			};
-
-			if (lpfFlag) {
-				~lpfLevel = 1;
-				~lpfCutoff = ~maplpfCutoff.value(newData);
-				if (abs(~lpfCutoff - ~oldFreq) > 4000) {
-					~filterLag = 1;
-				} {
-					~filterLag = 0.01;
-				};
-				~oldFreq = ~lpfCutoff;
-			} {
-				~lpfLevel = 0;
-			};
-			if (bpfFlag) {
-				~bpfLevel = 1;
-				~bpfCutoff = ~mapbpfCutoff.value(newData);
-				if (abs(~bpfCutoff - ~oldFreq) > 4000) {
-					~filterLag = 1;
-				} {
-					~filterLag = 0.01;
-				};
-				~oldFreq = ~bpfCutoff;
-			} {
-				~bpfLevel = 0;
-			};
-			if (hpfFlag) {
-				~hpfLevel = 1;
-				~hpfCutoff = ~maphpfCutoff.value(newData);
-				if (abs(~hpfCutoff - ~oldFreq) > 4000) {
-					~filterLag = 1;
-				} {
-					~filterLag = 0.01;
-				};
-				~oldFreq = ~hpfCutoff;
-			} {
-				~hpfLevel = 0;
-			};
-			if ((lpfFlag) || (bpfFlag) || (hpfFlag)) {
-				~mixedSoundLevel = 0;
-			} {
-				~mixedSoundLevel = 1;
-			};
-			if (reverbFlag) {
-				~reverbMix = ~mapreverbMix.value(newData);
-				~reverberation  = ~mapreverberation.value(newData);
-			} {
-				~reverbMix = 0.1;
-				~reverberation = 0.5;
-			};
-			if (delayFlag) {
-				~delayTime = ~mapdelayTime.value(newData);//0.33;
-				~decay = ~mapdecay.value(newData);//0.5;
-				~delayLevel = 1;
-			} {
-				~delayLevel = 0;
-			};
-
-			~sonificationVoice.set(\frequency, ~pitch, \frequency1, ~pitch1, \frequency2, ~pitch2, \soundlevel, ~soundlevel, \wavemix, ~wavemix, \attack, ~attack, \release, ~release, \clip, ~clip, \noiselevel, ~noise, \lfoLevel, ~amplitudeMod, \lfoFreq, ~amplitudeModFreq, \pinkNoiseLevel, ~pinkNoiseLevel, \whiteNoiseLevel, ~whiteNoiseLevel, \crackleNoiseLevel, ~crackleNoiseLevel, \sustain, ~sustain, \timbreMixLevel, ~timbreMixLevel, \sineLevel, ~sineLevel, \triLevel, ~triLevel, \squareLevel, ~squareLevel, \sawLevel, ~sawLevel, \mixedSoundLevel, ~mixedSoundLevel, \lpfLevel, ~lpfLevel, \bpfLevel, ~bpfLevel, \hpfLevel, ~hpfLevel, \lpfCutoff, ~lpfCutoff, \bpfCutoff, ~bpfCutoff, \hpfCutoff, ~hpfCutoff, \pw, ~pw, \lagTime, ~lagTime, \filterLag, ~filterLag);
-			~outputVoice.set(\reverbMix, ~reverbMix, \reverberation, ~reverberation, \delayTime, ~delayTime, \decay, ~decay, \delayLevel, ~delayLevel);
-		};
-	};
-
-}, '/mousePosition');
-
-
-NetAddr.langPort;
-NetAddr.localAddr;
-
-
 //Hämta state och fixa allt men just ny disableas allt också...
 OSCdef.new(\Dataset,
 	{
@@ -2297,6 +2092,222 @@ OSCdef.new(\Dataset,
 
 
 	, '/dataset');
+
+~filterLag = 0.01;
+~graphYPos = ~windowHeight - w.bounds.height + ~graphView.bounds.top;
+~oldData;
+~oldFreq = 0;
+~pitch = 220;
+~soundlevel = 0;
+~keyPressed = false;
+~wLeft = w.bounds.left;
+~wTop = w.bounds.top;
+~xStepSize = 0;
+o = OSCFunc({ arg msg, time, addr, recvPort;
+	var mouseXPos = 0;
+	var mouseYPos = 0;
+	var insideGraph, newData;
+	if (~graphType == 1) {
+		mouseXPos = (msg[3] - ~wLeft) - (~xStepSize / 2);
+	} {
+		mouseXPos = (msg[3] - ~wLeft);
+	};
+	mouseYPos = (msg[4] + ~wTop);
+	insideGraph = (mouseXPos >= ~margin) && (mouseXPos <= ~graphWidth) && (mouseYPos >= (~graphYPos + ~margin)) && (mouseYPos <= (~graphYPos + ~graphHeight - ~margin));
+	newData = ((mouseXPos - ~margin) / ~xStepSize).round;
+
+	if (insideGraph) {
+		if (newData != ~oldData) {
+			~keyPressed = true;
+			~oldData = newData;
+			if (data[newData] != nil) {
+				var yPos;
+				if (data2SonFlag) {
+					yPos = (data[newData] * ~yStepSize * 2);
+				} {
+					yPos = (data[newData] * ~yStepSize);
+				};
+				switch (~graphType,
+					0, {
+						{~markerView.moveTo((~margin + (newData * ~xStepSize) - (~markerSize / 2)), (~graphHeight - ~margin - yPos - (~markerSize / 2)))}.defer;
+					},
+					1, {
+						{~markerView.moveTo((~margin + (newData * ~xStepSize) + (~xStepSize / 2) - (~markerSize / 2)), (~graphHeight - ~margin - yPos - (~markerSize / 2)))}.defer;
+				});
+			};
+		};
+		if ((msg[5] == 1) && (~keyPressed)){
+			~keyPressed = false;
+			{~markerView.visible_(true)}.defer;
+			~sonificationVoice.set(\t_trig, 1, \gate, 1);
+		} {
+			if (msg[5] == 0) {
+				~keyPressed = true;
+				{~markerView.visible_(false)}.defer;
+				~sonificationVoice.set(\t_trig, 0, \gate, 0);
+			};
+		};
+		if ((~keyPressed == false) && (data[newData] != nil)){
+
+
+			if (~currentFilter != ~oldFilter) {
+				~lagTime = 1;
+				~oldFilter = ~currentFilter;
+			} {
+				~lagTime = 0.01;
+			};
+			if ((pitchFlag) || (pitchQuantFlag)) {
+				~pitch = ~mapPitch.value(newData);
+
+				newData.postln;
+
+			} {
+				~pitch = 440;
+			};
+			if ((harmonyFlag) || (chordFlag)) {
+				~pitch1 = ~mapPitch1.value(~pitch, newData);
+				~pitch2 = ~mapPitch2.value(~pitch, newData);
+			} {
+				~pitch1 = ~pitch;
+				~pitch2 = ~pitch;
+			};
+			if (amplitudeFlag) {
+				~soundlevel = ~mapAmplitude.value(newData);
+			} {
+				~soundlevel = 0.5;
+			};
+			if (wavemixFlag) {
+				~wavemix = ~mapWavemix.value(newData);
+				~sineLevel = 0;
+				~triLevel = 0;
+				~squareLevel = 0;
+				~sawLevel = 0;
+				~timbreMixLevel = 1;
+			} {
+				~wavemix = 0;
+				~timbreMixLevel = 0;
+			};
+			if (pwFlag) {
+				~pw = ~mapPw.value(newData);
+				~sineLevel = 0;
+				~triLevel = 0;
+				~squareLevel = 1;
+				~sawLevel = 0;
+			} {
+				~pw = 0.5;
+			};
+			if (attackFlag) {
+				~attack = ~mapAttack.value(newData);
+			} {
+				~attack = 0.001;
+			};
+			if (releaseFlag) {
+				~release = ~mapRelease.value(newData);
+			} {
+				~release = 0.5;
+			};
+			if (clipFlag) {
+				~clip = ~mapClip.value(newData);
+			} {
+				~clip = 1;
+			};
+			if (noiseFlag) {
+				~noise = 1;
+			} {
+				~noise = 0;
+			};
+			if (noiseType == 1) {
+				~whiteNoiseLevel = 0.5;
+				~pinkNoiseLevel = 0;
+				~crackleNoiseLevel = 0;
+			} {
+				if (noiseType == 2) {
+					~whiteNoiseLevel = 0;
+					~pinkNoiseLevel = 1;
+					~crackleNoiseLevel = 0;
+				} {
+					if (noiseType == 3) {
+						~whiteNoiseLevel = 0;
+						~pinkNoiseLevel = 0;
+						~crackleNoiseLevel = 1;
+					};
+				};
+			};
+			if (amplitudeModFlag) {
+				~amplitudeMod = ~mapAmplitudeMod.value(newData);
+				~amplitudeModFreq = ~mapAmplitudeModFreq.value(newData);
+			} {
+				~amplitudeMod = 1;
+				~amplitudeModFreq = 1;
+			};
+			if (amplitudeSusFlag) {
+				~sustain = 1;
+			} {
+				~sustain = 0;
+			};
+
+			if (lpfFlag) {
+				~lpfLevel = 1;
+				~lpfCutoff = ~maplpfCutoff.value(newData);
+				if (abs(~lpfCutoff - ~oldFreq) > 4000) {
+					~filterLag = 1;
+				} {
+					~filterLag = 0.01;
+				};
+				~oldFreq = ~lpfCutoff;
+			} {
+				~lpfLevel = 0;
+			};
+			if (bpfFlag) {
+				~bpfLevel = 1;
+				~bpfCutoff = ~mapbpfCutoff.value(newData);
+				if (abs(~bpfCutoff - ~oldFreq) > 4000) {
+					~filterLag = 1;
+				} {
+					~filterLag = 0.01;
+				};
+				~oldFreq = ~bpfCutoff;
+			} {
+				~bpfLevel = 0;
+			};
+			if (hpfFlag) {
+				~hpfLevel = 1;
+				~hpfCutoff = ~maphpfCutoff.value(newData);
+				if (abs(~hpfCutoff - ~oldFreq) > 4000) {
+					~filterLag = 1;
+				} {
+					~filterLag = 0.01;
+				};
+				~oldFreq = ~hpfCutoff;
+			} {
+				~hpfLevel = 0;
+			};
+			if ((lpfFlag) || (bpfFlag) || (hpfFlag)) {
+				~mixedSoundLevel = 0;
+			} {
+				~mixedSoundLevel = 1;
+			};
+			if (reverbFlag) {
+				~reverbMix = ~mapreverbMix.value(newData);
+				~reverberation  = ~mapreverberation.value(newData);
+			} {
+				~reverbMix = 0.1;
+				~reverberation = 0.5;
+			};
+			if (delayFlag) {
+				~delayTime = ~mapdelayTime.value(newData);//0.33;
+				~decay = ~mapdecay.value(newData);//0.5;
+				~delayLevel = 1;
+			} {
+				~delayLevel = 0;
+			};
+
+			~sonificationVoice.set(\frequency, ~pitch, \frequency1, ~pitch1, \frequency2, ~pitch2, \soundlevel, ~soundlevel, \wavemix, ~wavemix, \attack, ~attack, \release, ~release, \clip, ~clip, \noiselevel, ~noise, \lfoLevel, ~amplitudeMod, \lfoFreq, ~amplitudeModFreq, \pinkNoiseLevel, ~pinkNoiseLevel, \whiteNoiseLevel, ~whiteNoiseLevel, \crackleNoiseLevel, ~crackleNoiseLevel, \sustain, ~sustain, \timbreMixLevel, ~timbreMixLevel, \sineLevel, ~sineLevel, \triLevel, ~triLevel, \squareLevel, ~squareLevel, \sawLevel, ~sawLevel, \mixedSoundLevel, ~mixedSoundLevel, \lpfLevel, ~lpfLevel, \bpfLevel, ~bpfLevel, \hpfLevel, ~hpfLevel, \lpfCutoff, ~lpfCutoff, \bpfCutoff, ~bpfCutoff, \hpfCutoff, ~hpfCutoff, \pw, ~pw, \lagTime, ~lagTime, \filterLag, ~filterLag);
+			~outputVoice.set(\reverbMix, ~reverbMix, \reverberation, ~reverberation, \delayTime, ~delayTime, \decay, ~decay, \delayLevel, ~delayLevel);
+		};
+	};
+
+}, '/mousePosition');
 
 
 
