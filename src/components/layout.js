@@ -1,16 +1,17 @@
-import Settings from "./settings/settings";
-import Graph from "./graph/graph";
-import { useContext } from "react";
-import WebSocketContext from "../utils/websocketContext";
-import { useDispatch, useSelector } from "react-redux";
-import { updateFlag } from "../redux/actions";
+import Settings from './settings/settings';
+import Graph from './graph/graph';
+import { useContext } from 'react';
+import WebSocketContext from '../utils/websocketContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateFlag } from '../redux/actions';
 
 const Layout = () => {
   const container = {
-    display: "flex",
-    flexDirection: "column",
-    height: "100vh",
-    width: "100%",
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100vh',
+    width: '100%',
+    backgroundColor: '#DBDBDB',
   };
 
   const ws = useContext(WebSocketContext);
@@ -30,15 +31,13 @@ const Layout = () => {
   const toggle = () => {
     // Example of how we can set a flag
     // Takes in the variable name and 0 or 1 (on/off)
-    dispatch(updateFlag("amplitudeFlag", 1));
+    dispatch(updateFlag('amplitudeFlag', 1));
   };
 
   return (
     <div style={container}>
-      {/* <Graph />
-      <Settings /> */}
-      <button onClick={toggle}>Update amplitude flag</button>
-      <button onClick={sendMessage}>Send state to server</button>
+      <Graph />
+      <Settings />
     </div>
   );
 };

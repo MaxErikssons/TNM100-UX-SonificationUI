@@ -1,14 +1,18 @@
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
 import { Carousel } from 'react-responsive-carousel';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { updateFlag } from '../../redux/actions';
 
 const Slider = ({ props }) => {
   const [index, setIndex] = useState(0);
+  const dispatch = useDispatch();
 
   const mapIndexToName = {
-    0: 'Sågtand',
     1: 'Sinus',
+    3: 'Triangel',
     2: 'Fyrkant',
+    4: 'Sågtand',
   };
 
   const listLength = 3;
@@ -24,6 +28,12 @@ const Slider = ({ props }) => {
   const handleNext = () => {
     const newIndex = index === listLength - 1 ? 0 : index + 1;
     setIndex(newIndex);
+  };
+
+  const toggle = (e) => {
+    // Example of how we can set a flag
+    // Takes in the variable name and 0 or 1 (on/off)
+    dispatch(updateFlag('waveForm', e));
   };
   return (
     <div style={{ flex: 1 }}>
@@ -46,7 +56,7 @@ const Slider = ({ props }) => {
           </div>
         </div>
         <Carousel
-          onChange={(e) => console.log(mapIndexToName[e])}
+          onChange={toggle}
           showArrows={false}
           showThumbs={false}
           showIndicators={false}

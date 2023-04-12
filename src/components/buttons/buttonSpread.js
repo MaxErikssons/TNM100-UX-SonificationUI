@@ -1,21 +1,16 @@
-import './ioButton.css';
 import IoIcon from '../SVGS/ioIcon';
-import { useSelector, useDispatch } from 'react-redux';
 import { updateFlag } from '../../redux/actions';
+import { useSelector, useDispatch } from 'react-redux';
 
-const Button = ({ setting, isFirst, isLast }) => {
+const ButtonSpread = ({ setting }) => {
   const buttonActive = useSelector((state) => state[setting.id]);
+  const buttonTypeActive = useSelector((state) => state[setting.type]);
   const inverseActive = useSelector((state) => state[setting.invId]);
   const dispatch = useDispatch();
 
-  //Style the borders depending on position of button
   const getButtonStyles = () => {
     return {
-      borderLeft: !isFirst && 'gray solid 1px',
-      borderTopLeftRadius: isFirst && '15px',
-      borderBottomLeftRadius: isFirst && '15px',
-      borderTopRightRadius: isLast && '15px',
-      borderBottomRightRadius: isLast && '15px',
+      borderRadius: '10px',
       height: 70,
       width: '100%',
     };
@@ -23,7 +18,7 @@ const Button = ({ setting, isFirst, isLast }) => {
 
   //Change color of button if (in)active.
   const activeStyle = () => {
-    if (buttonActive) {
+    if (isButtonActive()) {
       return {
         backgroundColor: '#C7C7C7',
         boxShadow: 'none',
@@ -32,16 +27,25 @@ const Button = ({ setting, isFirst, isLast }) => {
       return { backgroundColor: '#D9D9D9', boxShadow: '0px 4px 0px #6A6969' };
     }
   };
+
+  const isButtonActive = () => {
+    if (setting.type)
+      return Boolean(buttonActive && buttonTypeActive === setting.val);
+    return Boolean(buttonActive);
+  };
+
   return (
     <div
       style={{
         width: '100%',
+        marginLeft: '10px',
+        marginRight: '10px',
       }}
       onClick={() => {
-        dispatch(updateFlag(setting.id, Number(!buttonActive)));
         if (setting.type) {
           dispatch(updateFlag(setting.type, Number(setting.val)));
         }
+        dispatch(updateFlag(setting.id, Number(!buttonActive)));
       }}
     >
       <div>{setting?.name}</div>
@@ -68,10 +72,10 @@ const Button = ({ setting, isFirst, isLast }) => {
             ></div>
             <IoIcon
               id='ioicon'
-              color={buttonActive ? '#00FF00' : '#000000'}
+              color={isButtonActive() ? '#00FF00' : '#000000'}
             ></IoIcon>
           </div>
-          {Boolean(buttonActive) && (
+          {Boolean(isButtonActive()) && (
             <div
               className='mirrorbutton'
               role='button'
@@ -90,4 +94,4 @@ const Button = ({ setting, isFirst, isLast }) => {
   );
 };
 
-export default Button;
+export default ButtonSpread;

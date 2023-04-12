@@ -1,4 +1,4 @@
-import { UPDATE_FLAG } from "./actions";
+import { UPDATE_FLAG } from './actions';
 
 const initialState = {
   pitchFlag: 0,
@@ -39,6 +39,7 @@ const initialState = {
   data1Flag: 1,
   data2Flag: 0,
   data2SonFlag: 0,
+  graphValue: 0,
 };
 
 const reducer = (state = initialState, action) => {
