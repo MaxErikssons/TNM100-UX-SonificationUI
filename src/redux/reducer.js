@@ -45,10 +45,36 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case UPDATE_FLAG:
-      return {
-        ...state,
-        [action.flag]: action.val,
-      };
+      switch (action.flag) {
+        case 'pitchFlag':
+          return {
+            ...state,
+            pitchFlag: 1,
+            pitchInvFlag: 0,
+            pitchQuantFlag: 0,
+          };
+
+        case 'pitchInvFlag':
+          return {
+            ...state,
+            pitchFlag: 0,
+            pitchInvFlag: 1,
+            pitchQuantFlag: 0,
+          };
+        case 'pitchQuantFlag':
+          return {
+            ...state,
+            pitchFlag: 0,
+            pitchInvFlag: 0,
+            pitchQuantFlag: 1,
+          };
+        default:
+          return {
+            ...state,
+            [action.flag]: action.val,
+          };
+      }
+
     default:
       return state;
   }

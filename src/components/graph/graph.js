@@ -98,14 +98,11 @@ const Graph = () => {
   };
 
   const onGraphClick = (e) => {
-    console.log(e.activePayload[0].value);
-    dispatch(updateFlag('graphVal', e.activePayload[0].value));
-    sendMessage();
-    setSelectedDataIndex(e.activeTooltipIndex);
-  };
-
-  const formatXAxisTicks = (value) => {
-    return Math.round(value / 10) * 10;
+    if (e.activeTooltipIndex) {
+      dispatch(updateFlag('graphVal', e.activeTooltipIndex));
+      sendMessage();
+      setSelectedDataIndex(e.activeTooltipIndex);
+    }
   };
 
   const sendMessage = () => {
@@ -220,7 +217,6 @@ const Graph = () => {
       style={{
         flex: 1,
         width: '80%',
-        height: '70%',
         marginLeft: 'auto',
         marginRight: 'auto',
         textAlign: 'center',
@@ -240,7 +236,7 @@ const Graph = () => {
         <button onClick={() => handleReverseButtonClick()}>Reverse</button>
       </div>
 
-      <ResponsiveContainer height={'87%'}>{renderChart()}</ResponsiveContainer>
+      <ResponsiveContainer height={'80%'}>{renderChart()}</ResponsiveContainer>
 
       <div
         style={{

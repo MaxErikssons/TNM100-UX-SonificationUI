@@ -1,4 +1,4 @@
-const ButtonContainer = ({ children, title, backgroudColor }) => {
+const ButtonContainer = ({ children, title, backgroudColor, radius = 21 }) => {
   return (
     <div
       style={{
@@ -12,10 +12,10 @@ const ButtonContainer = ({ children, title, backgroudColor }) => {
       <div
         style={{
           backgroundColor: backgroudColor,
-          marginLeft: '3%',
-          marginRight: '3%',
+          marginLeft: '5%',
+          marginRight: '5%',
           marginBottom: '2%',
-          borderRadius: 10,
+          borderRadius: radius,
           background: backgroudColor,
           padding: 20,
           boxShadow: `0 1px 1px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.12),

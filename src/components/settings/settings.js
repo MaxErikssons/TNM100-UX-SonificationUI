@@ -2,7 +2,6 @@ import { useState } from 'react';
 import ButtonGroup from '../buttons/buttonGroup';
 import Slider from '../sliders/slider';
 import ButtonContainer from '../buttons/buttonContainer';
-import ButtonSpread from '../buttons/buttonSpread';
 
 const Settings = () => {
   const [activeSetting, setActiveSetting] = useState(1);
@@ -28,6 +27,8 @@ const Settings = () => {
   const row = {
     display: 'flex',
     flexDirection: 'row',
+    width: '100%',
+    border: 'solid',
   };
 
   return (
@@ -45,29 +46,54 @@ const Settings = () => {
           padding: '1%',
         }}
       >
-        <div style={{ width: '25%' }}>
-          <ButtonContainer backgroudColor={'grey'} title='Vågform'>
-            <Slider props={{ header: 'Vågform' }} />
+        <div
+          style={{
+            display: 'flex',
+            width: '15%',
+            justifyContent: 'center',
+            flexDirection: 'column',
+            border: 'solid',
+          }}
+        >
+          <ButtonContainer backgroudColor={'grey'} title='Vågform' radius={40}>
+            <Slider
+              mapIndexToName={{
+                0: { name: 'Sinus', id: 'waveForm' },
+                1: { name: 'Triangel', id: 'waveForm' },
+                2: { name: 'Fyrkant', id: 'waveForm' },
+                3: { name: 'Sågtand', id: 'waveForm' },
+              }}
+            />
+          </ButtonContainer>
+          <ButtonContainer backgroudColor={'grey'} title='Toner' radius={40}>
+            <Slider
+              mapIndexToName={{
+                0: { name: 'Frekvens', id: 'pitchFlag' },
+                1: { name: 'Speglad frekvens', id: 'pitchInvFlag' },
+                2: { name: 'Toner', id: 'pitchQuantFlag' },
+              }}
+              singleType
+            />
           </ButtonContainer>
         </div>
         <div
           style={{
             display: 'flex',
-            width: '75%',
+            width: '85%',
             flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
           }}
         >
           <div style={row}>
             <ButtonContainer backgroudColor={'#FFEEBB'} title='Filter'>
               <ButtonGroup
                 props={{
-                  header: 'Filter',
                   settings: [
                     { name: 'Lågpass', id: 'lpfFlag', invId: 'lpfInvFlag' },
                     { name: 'Högpass', id: 'hpfFlag', invId: 'hpfInvFlag' },
                     { name: 'Bandpass', id: 'bpfFlag', invId: 'bpfInvFlag' },
                   ],
-                  background: '#FFEEBB',
                   spread: false,
                 }}
               />
@@ -75,7 +101,6 @@ const Settings = () => {
             <ButtonContainer backgroudColor={'#FFBBD2'} title='Rumseffekt'>
               <ButtonGroup
                 props={{
-                  header: 'Rumseffekt',
                   settings: [
                     {
                       name: 'Efterklang',
@@ -84,16 +109,44 @@ const Settings = () => {
                     },
                     { name: 'Eko', id: 'delayFlag', invId: 'delayInvFlag' },
                   ],
-                  background: '#FFBBD2',
                   spread: true,
                 }}
               />
             </ButtonContainer>
-
-            <ButtonContainer backgroudColor={'#FFBCA7'} title='Ljudvolum'>
+            <ButtonContainer backgroudColor={'#A880AF'} title='Ljudvolym'>
               <ButtonGroup
                 props={{
-                  header: 'Harmoni',
+                  settings: [
+                    {
+                      name: 'Ljudvolym',
+                      id: '',
+                      invId: '',
+                    },
+                    { name: 'Modulation', id: '', invId: '' },
+                    { name: 'Sustain', id: '', invId: undefined },
+                  ],
+                  spread: true,
+                }}
+              />
+            </ButtonContainer>
+            <div
+              style={{
+                display: 'flex',
+                width: '10%',
+                justifyContent: 'center',
+                alignContent: 'center',
+                border: 'solid',
+              }}
+            >
+              <div>
+                <button>Återställ</button>
+              </div>
+            </div>
+          </div>
+          <div style={row}>
+            <ButtonContainer backgroudColor={'#FFBCA7'} title='Harmoni'>
+              <ButtonGroup
+                props={{
                   settings: [
                     {
                       name: 'Harmoni',
@@ -106,17 +159,13 @@ const Settings = () => {
                       invId: 'chordInvFlag',
                     },
                   ],
-                  background: '#FFBCA7',
                   spread: false,
                 }}
               />
             </ButtonContainer>
-          </div>
-          <div style={row}>
-            <ButtonContainer backgroudColor={'#FFBCA7'} title='Ljudvolum'>
+            <ButtonContainer backgroudColor={'#FB9891'} title='Brus'>
               <ButtonGroup
                 props={{
-                  header: 'Brus',
                   settings: [
                     {
                       name: 'Vitt brus',
@@ -133,56 +182,60 @@ const Settings = () => {
                       val: 1,
                     },
                     {
-                      name: 'Vitt brus',
+                      name: 'Rosa brus',
                       id: 'noiseFlag',
                       invId: 'harmonyInvFlag',
                       type: 'noiseType',
                       val: 2,
                     },
                   ],
-                  background: '#FFBCA7',
                   spread: true,
                 }}
               />
             </ButtonContainer>
-            {/* <ButtonContainer backgroudColor={'#FFBCA7'} title='Harmoni'>
+            <ButtonContainer backgroudColor={'#F28880'} title='Tidaspekter'>
               <ButtonGroup
                 props={{
-                  header: 'Klangfärg',
-                  settings: [],
-                  background: '#FFBCA7',
+                  settings: [
+                    {
+                      name: 'Attack',
+                      id: '',
+                      invId: '',
+                    },
+                    {
+                      name: 'Release',
+                      id: '',
+                      invId: '',
+                    },
+                  ],
+                  spread: false,
                 }}
               />
             </ButtonContainer>
-              
-            <ButtonContainer backgroudColor={'#FFEEBB'} title='Brus'>
+            <ButtonContainer backgroudColor={'#9ED1F9'} title='Klangfärg'>
               <ButtonGroup
                 props={{
-                  header: 'Filter',
-                  settings: ['Lågpass', 'Högpass', 'Bandpass'],
-                  background: '#FFEEBB',
+                  settings: [
+                    {
+                      name: 'Vågform',
+                      id: '',
+                      invId: '',
+                    },
+                    {
+                      name: 'Pulsbredd',
+                      id: '',
+                      invId: '',
+                    },
+                    {
+                      name: 'Distortion',
+                      id: '',
+                      invId: '',
+                    },
+                  ],
+                  spread: false,
                 }}
               />
             </ButtonContainer>
-            <ButtonContainer backgroudColor={'#FFEEBB'} title='Tidsaspekter'>
-              <ButtonGroup
-                props={{
-                  header: 'Filter',
-                  settings: ['Lågpass', 'Högpass', 'Bandpass'],
-                  background: '#FFEEBB',
-                }}
-              />
-            </ButtonContainer>
-            <ButtonContainer backgroudColor={'#FFBCA7'} title='Klangfärg'>
-              <ButtonGroup
-                props={{
-                  header: 'Setting 3',
-                  settings: ['Set 1', 'Set 2'],
-                  background: '#FFBCA7',
-                }}
-              />
-            </ButtonContainer>
-              */}
           </div>
         </div>
       </div>

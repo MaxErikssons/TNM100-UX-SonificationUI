@@ -16,8 +16,6 @@ const Button = ({ setting, isFirst, isLast }) => {
       borderBottomLeftRadius: isFirst && '15px',
       borderTopRightRadius: isLast && '15px',
       borderBottomRightRadius: isLast && '15px',
-      height: 70,
-      width: '100%',
     };
   };
 
@@ -44,16 +42,10 @@ const Button = ({ setting, isFirst, isLast }) => {
         }
       }}
     >
-      <div>{setting?.name}</div>
-      <div>
+      <div style={{ height: '100%' }}>
+        <div style={{ fontSize: 12 }}>{setting?.name}</div>
         <div
           style={{
-            margin: 'auto',
-            display: 'block',
-            position: 'relative',
-            top: '18%',
-            height: '50px',
-            paddingTop: '5%',
             ...getButtonStyles(),
             ...activeStyle(),
           }}
@@ -71,7 +63,7 @@ const Button = ({ setting, isFirst, isLast }) => {
               color={buttonActive ? '#00FF00' : '#000000'}
             ></IoIcon>
           </div>
-          {Boolean(buttonActive) && (
+          {Boolean(buttonActive) && setting.invId && (
             <div
               className='mirrorbutton'
               role='button'

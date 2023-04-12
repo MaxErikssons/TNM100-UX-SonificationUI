@@ -4,17 +4,9 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { updateFlag } from '../../redux/actions';
 
-const Slider = ({ props }) => {
+const Slider = ({ mapIndexToName, singleType }) => {
   const [index, setIndex] = useState(0);
   const dispatch = useDispatch();
-
-  const mapIndexToName = {
-    1: 'Sinus',
-    3: 'Triangel',
-    2: 'Fyrkant',
-    4: 'Sågtand',
-  };
-
   const listLength = 3;
   const height = 60;
   const arrowHeight = 25;
@@ -33,10 +25,11 @@ const Slider = ({ props }) => {
   const toggle = (e) => {
     // Example of how we can set a flag
     // Takes in the variable name and 0 or 1 (on/off)
-    dispatch(updateFlag('waveForm', e));
+    if (singleType) dispatch(updateFlag(mapIndexToName[e].id, 1));
+    else dispatch(updateFlag(mapIndexToName[e].id, e + 1));
   };
   return (
-    <div style={{ flex: 1 }}>
+    <div>
       <div style={row}>
         <div
           onClick={handlePrev}
@@ -98,6 +91,17 @@ const Slider = ({ props }) => {
               alt=''
             />
           </div>
+          <div
+            style={{
+              height: height,
+            }}
+          >
+            <img
+              src={require('../../assets/sawtooth.png')}
+              height={height}
+              alt=''
+            />
+          </div>
         </Carousel>
         <div
           onClick={handleNext}
@@ -117,7 +121,7 @@ const Slider = ({ props }) => {
           </div>
         </div>
       </div>
-      <div style={header}>{mapIndexToName[index]}</div>
+      <div style={header}>{mapIndexToName[index].name}</div>
     </div>
   );
 };

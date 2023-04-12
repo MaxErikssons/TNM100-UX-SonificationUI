@@ -11,7 +11,6 @@ const ButtonSpread = ({ setting }) => {
   const getButtonStyles = () => {
     return {
       borderRadius: '10px',
-      height: 70,
       width: '100%',
     };
   };
@@ -48,16 +47,13 @@ const ButtonSpread = ({ setting }) => {
         dispatch(updateFlag(setting.id, Number(!buttonActive)));
       }}
     >
-      <div>{setting?.name}</div>
-      <div>
+      <div style={{ padding: '2%' }}>
+        <div style={{ fontSize: 12 }}>{setting?.name}</div>
         <div
           style={{
             margin: 'auto',
             display: 'block',
             position: 'relative',
-            top: '18%',
-            height: '50px',
-            paddingTop: '5%',
             ...getButtonStyles(),
             ...activeStyle(),
           }}
@@ -75,7 +71,7 @@ const ButtonSpread = ({ setting }) => {
               color={isButtonActive() ? '#00FF00' : '#000000'}
             ></IoIcon>
           </div>
-          {Boolean(isButtonActive()) && (
+          {Boolean(isButtonActive()) && setting.invId && (
             <div
               className='mirrorbutton'
               role='button'

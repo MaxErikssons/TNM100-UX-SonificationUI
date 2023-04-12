@@ -1,7 +1,7 @@
 module.exports = {
-  pitchFlag: 'i',
-  pitchInvFlag: 'i',
-  pitchQuantFlag: 'i',
+  pitchFlag: 'i', //Frekvens
+  pitchInvFlag: 'i', //Frekvens invers
+  pitchQuantFlag: 'i', //Toner
   amplitudeFlag: 'i',
   amplitudeInvFlag: 'i',
   amplitudeSusFlag: 'i',
