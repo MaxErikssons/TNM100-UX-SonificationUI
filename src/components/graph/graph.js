@@ -16,22 +16,8 @@ import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import { useContext } from 'react';
 import WebSocketContext from '../../utils/websocketContext';
-import { useSelector } from 'react-redux';
-
-// const data = [
-//   { name: 'Jan', value: 300 },
-//   { name: 'Feb', value: 200 },
-//   { name: 'Mar', value: 350 },
-//   { name: 'Apr', value: 400 },
-//   { name: 'May', value: 500 },
-//   { name: 'Jun', value: 600 },
-//   { name: 'Jul', value: 500 },
-//   { name: 'Aug', value: 300 },
-//   { name: 'Sep', value: 430 },
-//   { name: 'Oct', value: 690 },
-//   { name: 'Nov', value: 500 },
-//   { name: 'Dec', value: 400 },
-// ];
+import { useDispatch, useSelector } from 'react-redux';
+import { updateFlag } from '../../redux/actions';
 
 const arr = [
   4.8, 5.7, 7.7, 5.8, 6.7, 6.4, 7.3, 6.0, 5.5, 3.6, 5.1, 5.5, 5.6, 5.9, 6.8,
@@ -84,6 +70,7 @@ const Graph = () => {
   const intervalRef = useRef();
   const ws = useContext(WebSocketContext);
   const state = useSelector((state) => state);
+  const dispatch = useDispatch();
 
   const handleSliderChange = (value) => {
     setSelectedDataIndex(value);
@@ -111,6 +98,8 @@ const Graph = () => {
   };
 
   const onGraphClick = (e) => {
+    console.log(e.activePayload[0].value);
+    dispatch(updateFlag('graphVal', e.activePayload[0].value));
     sendMessage();
     setSelectedDataIndex(e.activeTooltipIndex);
   };
@@ -153,7 +142,7 @@ const Graph = () => {
     const selectedData = data[selectedDataIndex];
     if (chartType === 'line') {
       return (
-        <LineChart data={data} onMouseMove={onMoveMouse}>
+        <LineChart data={data} onMouseMove={onMoveMouse} onClick={onGraphClick}>
           <XAxis
             dataKey='name'
             type='number'
@@ -231,6 +220,7 @@ const Graph = () => {
       style={{
         flex: 1,
         width: '80%',
+        height: '70%',
         marginLeft: 'auto',
         marginRight: 'auto',
         textAlign: 'center',
@@ -250,15 +240,14 @@ const Graph = () => {
         <button onClick={() => handleReverseButtonClick()}>Reverse</button>
       </div>
 
-      <ResponsiveContainer height={data.length * 3}>
-        {renderChart()}
-      </ResponsiveContainer>
+      <ResponsiveContainer height={'87%'}>{renderChart()}</ResponsiveContainer>
 
       <div
         style={{
           marginTop: '20px',
           width: '95%',
           marginLeft: '5%',
+          marginBottom: '5%',
         }}
       >
         <Slider

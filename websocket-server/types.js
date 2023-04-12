@@ -37,5 +37,5 @@ module.exports = {
   data1Flag: 'i',
   data2Flag: 'i',
   data2SonFlag: 'i',
-  graphValue: 'i',
+  graphValue: 'f',
 };
