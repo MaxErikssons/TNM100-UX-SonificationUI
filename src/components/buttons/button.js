@@ -4,8 +4,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { updateFlag } from '../../redux/actions';
 
 const Button = ({ setting, isFirst, isLast }) => {
-  const buttonActive = useSelector((state) => state[setting.id]);
-  const inverseActive = useSelector((state) => state[setting.invId]);
+  const buttonActive = useSelector(
+    (state) => state[state.activeState][setting.id]
+  );
+  const inverseActive = useSelector(
+    (state) => state[state.activeState][setting.invId]
+  );
   const dispatch = useDispatch();
 
   //Style the borders depending on position of button

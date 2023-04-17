@@ -3,9 +3,15 @@ import { updateFlag } from '../../redux/actions';
 import { useSelector, useDispatch } from 'react-redux';
 
 const ButtonSpread = ({ setting }) => {
-  const buttonActive = useSelector((state) => state[setting.id]);
-  const buttonTypeActive = useSelector((state) => state[setting.type]);
-  const inverseActive = useSelector((state) => state[setting.invId]);
+  const buttonActive = useSelector(
+    (state) => state[state.activeState][setting.id]
+  );
+  const buttonTypeActive = useSelector(
+    (state) => state[state.activeState][setting.type]
+  );
+  const inverseActive = useSelector(
+    (state) => state[state.activeState][setting.invId]
+  );
   const dispatch = useDispatch();
 
   const getButtonStyles = () => {

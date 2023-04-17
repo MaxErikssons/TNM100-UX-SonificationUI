@@ -1,29 +1,8 @@
-import { useState } from 'react';
 import ButtonGroup from '../buttons/buttonGroup';
 import Slider from '../sliders/slider';
 import ButtonContainer from '../buttons/buttonContainer';
 
-const Settings = () => {
-  const [activeSetting, setActiveSetting] = useState(1);
-
-  const getActiveSetting = (index) => {
-    return {
-      backgroundColor: activeSetting === index ? '#585858' : '#343232',
-      flex: 1,
-      textAlign: 'center',
-      color: 'white',
-      fontSize: 18,
-      fontWeight: '600',
-      borderRight: '1px solid',
-      borderColor: '#585858',
-    };
-  };
-
-  const bar = {
-    display: 'flex',
-    flexDirection: 'row',
-  };
-
+const AudioSettings = () => {
   const row = {
     display: 'flex',
     flexDirection: 'row',
@@ -32,12 +11,7 @@ const Settings = () => {
   };
 
   return (
-    <div style={{ flex: 3 }}>
-      <div style={bar}>
-        <div style={getActiveSetting(1)}>Ljudinställning</div>
-        <div style={getActiveSetting(2)}>Grafinställning</div>
-        <div style={getActiveSetting(3)}>Förinställningar</div>
-      </div>
+    <div>
       <div
         style={{
           display: 'flex',
@@ -137,11 +111,19 @@ const Settings = () => {
                   settings: [
                     {
                       name: 'Ljudvolym',
-                      id: '',
-                      invId: '',
+                      id: 'amplitudeFlag',
+                      invId: 'amplitudeInvFlag',
                     },
-                    { name: 'Modulation', id: '', invId: '' },
-                    { name: 'Sustain', id: '', invId: undefined },
+                    {
+                      name: 'Modulation',
+                      id: 'amplitudeModFlag',
+                      invId: 'amplitudeModInvFlag',
+                    },
+                    {
+                      name: 'Sustain',
+                      id: 'amplitudeSusFlag',
+                      invId: undefined,
+                    },
                   ],
                   spread: true,
                 }}
@@ -224,13 +206,13 @@ const Settings = () => {
                   settings: [
                     {
                       name: 'Attack',
-                      id: '',
-                      invId: '',
+                      id: 'attackFlag',
+                      invId: 'attackInvFlag',
                     },
                     {
                       name: 'Release',
-                      id: '',
-                      invId: '',
+                      id: 'releaseFlag',
+                      invId: 'releaseInvFlag',
                     },
                   ],
                   spread: false,
@@ -247,18 +229,18 @@ const Settings = () => {
                   settings: [
                     {
                       name: 'Vågform',
-                      id: '',
-                      invId: '',
+                      id: 'wavemixFlag',
+                      invId: 'wavemixInvFlag',
                     },
                     {
                       name: 'Pulsbredd',
-                      id: '',
-                      invId: '',
+                      id: 'pwFlag',
+                      invId: 'pwInvFlag',
                     },
                     {
                       name: 'Distortion',
-                      id: '',
-                      invId: '',
+                      id: 'clipFlag',
+                      invId: 'clipInvFlag',
                     },
                   ],
                   spread: false,
@@ -272,4 +254,4 @@ const Settings = () => {
   );
 };
 
-export default Settings;
+export default AudioSettings;
