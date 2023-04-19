@@ -1,14 +1,14 @@
-import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
-import { Carousel } from 'react-responsive-carousel';
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { updateFlag } from '../../redux/actions';
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import { Carousel } from "react-responsive-carousel";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { updateFlag } from "../../redux/actions";
 
-const Slider = ({ mapIndexToName, singleType }) => {
+const Slider = ({ mapIndexToName, singleType, children }) => {
   const [index, setIndex] = useState(0);
   const dispatch = useDispatch();
-  const listLength = 3;
-  const height = 50;
+  const listLength = Object.keys(mapIndexToName).length;
+  const height = 100;
   const arrowHeight = 25;
   const arrowWidth = 20;
 
@@ -31,9 +31,10 @@ const Slider = ({ mapIndexToName, singleType }) => {
   return (
     <div
       style={{
-        display: 'flex',
-        justifyContent: 'center',
-        flexDirection: 'column',
+        display: "flex",
+        justifyContent: "center",
+        flexDirection: "column",
+        height: "100%",
       }}
     >
       <div style={row}>
@@ -42,13 +43,13 @@ const Slider = ({ mapIndexToName, singleType }) => {
           style={{
             ...btnStyles,
             height: height,
-            marginRight: '10%',
+            marginRight: "10%",
           }}
         >
           <div>
             <img
-              alt=''
-              src={require('../../assets/arrow.png')}
+              alt=""
+              src={require("../../assets/arrow.png")}
               width={arrowWidth}
               height={arrowHeight}
             />
@@ -62,67 +63,22 @@ const Slider = ({ mapIndexToName, singleType }) => {
           showStatus={false}
           selectedItem={index}
         >
-          <div
-            style={{
-              height,
-            }}
-          >
-            <img
-              src={require('../../assets/sawtooth.png')}
-              height={height}
-              alt=''
-            />
-          </div>
-
-          <div
-            style={{
-              height: height,
-            }}
-          >
-            <img
-              src={require('../../assets/sawtooth.png')}
-              height={height}
-              alt=''
-            />
-          </div>
-
-          <div
-            style={{
-              height: height,
-            }}
-          >
-            <img
-              src={require('../../assets/sawtooth.png')}
-              height={height}
-              alt=''
-            />
-          </div>
-          <div
-            style={{
-              height: height,
-            }}
-          >
-            <img
-              src={require('../../assets/sawtooth.png')}
-              height={height}
-              alt=''
-            />
-          </div>
+          {children}
         </Carousel>
         <div
           onClick={handleNext}
           style={{
             ...btnStyles,
             height: height,
-            marginLeft: '10%',
+            marginLeft: "10%",
           }}
         >
           <div>
             <img
-              src={require('../../assets/arrow-reverse.png')}
+              src={require("../../assets/arrow-reverse.png")}
               width={arrowWidth}
               height={arrowHeight}
-              alt=''
+              alt=""
             />
           </div>
         </div>
@@ -133,18 +89,18 @@ const Slider = ({ mapIndexToName, singleType }) => {
 };
 
 const btnStyles = {
-  cursor: 'pointer',
-  justifyContent: 'center',
-  alignItems: 'center',
-  display: 'flex',
-  width: '100%',
+  cursor: "pointer",
+  justifyContent: "center",
+  alignItems: "center",
+  display: "flex",
+  width: "100%",
 };
 
 const header = {
-  fontWeight: 'bold',
-  color: 'white',
+  fontWeight: "bold",
+  color: "white",
 };
 
-const row = { display: 'flex', flexDirection: 'row' };
+const row = { display: "flex", flexDirection: "row" };
 
 export default Slider;

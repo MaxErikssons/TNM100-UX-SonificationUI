@@ -1,6 +1,6 @@
-import './ioButton.css';
-import Button from './button';
-import ButtonSpread from './buttonSpread';
+import "./ioButton.css";
+import Button from "./button";
+import ButtonSpread from "./buttonSpread";
 
 const ButtonGroup = ({ props }) => {
   const { settings, spread } = props;
@@ -8,10 +8,11 @@ const ButtonGroup = ({ props }) => {
   return (
     <div
       style={{
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'center',
-        width: '100%',
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "center",
+        width: "100%",
+        height: "100%",
       }}
     >
       {settings.map((setting, index) =>

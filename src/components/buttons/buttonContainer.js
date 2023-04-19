@@ -8,19 +8,22 @@ const ButtonContainer = ({
   return (
     <div
       style={{
-        textAlign: 'center',
+        textAlign: "center",
         flex,
+        alignItems: "center",
       }}
     >
-      <div style={{ color: 'white', fontWeight: '500', fontSize: 16 }}>
+      <div style={{ color: "white", fontWeight: "500", fontSize: 16 }}>
         {title}
       </div>
       <div
         style={{
+          height: 100,
           backgroundColor: backgroudColor,
-          marginLeft: '5%',
-          marginRight: '5%',
-          marginBottom: '2%',
+          marginLeft: "5%",
+          marginRight: "5%",
+          marginBottom: "2%",
+          justifyContent: "center",
           borderRadius: radius,
           background: backgroudColor,
           padding: 20,

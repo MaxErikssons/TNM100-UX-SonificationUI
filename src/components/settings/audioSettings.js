@@ -1,127 +1,210 @@
-import ButtonGroup from '../buttons/buttonGroup';
-import Slider from '../sliders/slider';
-import ButtonContainer from '../buttons/buttonContainer';
+import ButtonGroup from "../buttons/buttonGroup";
+import Slider from "../sliders/slider";
+import ButtonContainer from "../buttons/buttonContainer";
 
 const AudioSettings = () => {
   const row = {
-    display: 'flex',
-    flexDirection: 'row',
-    width: '100%',
-    height: '100%',
+    display: "flex",
+    flexDirection: "row",
+    width: "100%",
+    height: "100%",
   };
+
+  const height = 100;
 
   return (
     <div>
       <div
         style={{
-          display: 'flex',
-          backgroundColor: '#585858',
-          flexDirection: 'row',
-          height: '100%',
+          display: "flex",
+          backgroundColor: "#585858",
+          flexDirection: "row",
+          height: "100%",
         }}
       >
         <div
           style={{
-            display: 'flex',
-            width: '15%',
-            justifyContent: 'center',
-            alignItems: 'center',
-            flexDirection: 'column',
+            display: "flex",
+            width: "15%",
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "column",
           }}
         >
           <ButtonContainer
-            backgroudColor={'grey'}
-            title='Vågform'
+            backgroudColor={"grey"}
+            title="Vågform"
             radius={40}
             flex={1}
           >
             <Slider
               mapIndexToName={{
-                0: { name: 'Sinus', id: 'waveForm' },
-                1: { name: 'Triangel', id: 'waveForm' },
-                2: { name: 'Fyrkant', id: 'waveForm' },
-                3: { name: 'Sågtand', id: 'waveForm' },
+                0: { name: "Sinus", id: "waveForm" },
+                1: { name: "Triangel", id: "waveForm" },
+                2: { name: "Fyrkant", id: "waveForm" },
+                3: { name: "Sågtand", id: "waveForm" },
               }}
-            />
+            >
+              <div
+                style={{
+                  height,
+                }}
+              >
+                <img
+                  src={require("../../assets/sinus.png")}
+                  height={height}
+                  alt=""
+                />
+              </div>
+
+              <div
+                style={{
+                  height: height,
+                }}
+              >
+                <img
+                  src={require("../../assets/sawtooth.png")}
+                  height={height}
+                  alt=""
+                />
+              </div>
+
+              <div
+                style={{
+                  height: height,
+                }}
+              >
+                <img
+                  src={require("../../assets/square.png")}
+                  height={height}
+                  alt=""
+                />
+              </div>
+              <div
+                style={{
+                  height: height,
+                }}
+              >
+                <img
+                  src={require("../../assets/triangle.png")}
+                  height={height}
+                  alt=""
+                />
+              </div>
+            </Slider>
           </ButtonContainer>
           <ButtonContainer
-            backgroudColor={'grey'}
-            title='Tonhöjd'
+            backgroudColor={"grey"}
+            title="Tonhöjd"
             radius={40}
             flex={1}
           >
             <Slider
               mapIndexToName={{
-                0: { name: 'Frekvens', id: 'pitchFlag' },
-                1: { name: 'Speglad frekvens', id: 'pitchInvFlag' },
-                2: { name: 'Toner', id: 'pitchQuantFlag' },
+                0: { name: "Frekvens", id: "pitchFlag" },
+                1: { name: "Speglad frekvens", id: "pitchInvFlag" },
+                2: { name: "Toner", id: "pitchQuantFlag" },
               }}
               singleType
-            />
+            >
+              <div
+                style={{
+                  height: height,
+                }}
+              >
+                <img
+                  src={require("../../assets/frekvens.png")}
+                  height={height}
+                  alt=""
+                />
+              </div>
+              <div
+                style={{
+                  height: height,
+                }}
+              >
+                <img
+                  src={require("../../assets/frekvensInv.png")}
+                  height={height}
+                  alt=""
+                />
+              </div>
+              <div
+                style={{
+                  height: height,
+                }}
+              >
+                <img
+                  src={require("../../assets/toner.png")}
+                  height={height}
+                  alt=""
+                />
+              </div>
+            </Slider>
           </ButtonContainer>
         </div>
         <div
           style={{
-            display: 'flex',
-            width: '85%',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
+            display: "flex",
+            width: "85%",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
           <div style={row}>
-            <ButtonContainer backgroudColor={'#FFEEBB'} title='Filter' flex={3}>
+            <ButtonContainer backgroudColor={"#FFEEBB"} title="Filter" flex={3}>
               <ButtonGroup
                 props={{
                   settings: [
-                    { name: 'Lågpass', id: 'lpfFlag', invId: 'lpfInvFlag' },
-                    { name: 'Högpass', id: 'hpfFlag', invId: 'hpfInvFlag' },
-                    { name: 'Bandpass', id: 'bpfFlag', invId: 'bpfInvFlag' },
+                    { name: "Lågpass", id: "lpfFlag", invId: "lpfInvFlag" },
+                    { name: "Högpass", id: "hpfFlag", invId: "hpfInvFlag" },
+                    { name: "Bandpass", id: "bpfFlag", invId: "bpfInvFlag" },
                   ],
                   spread: false,
                 }}
               />
             </ButtonContainer>
             <ButtonContainer
-              backgroudColor={'#FFBBD2'}
-              title='Rumseffekt'
+              backgroudColor={"#FFBBD2"}
+              title="Rumseffekt"
               flex={2}
             >
               <ButtonGroup
                 props={{
                   settings: [
                     {
-                      name: 'Efterklang',
-                      id: 'reverbFlag',
-                      invId: 'reverbInvFlag',
+                      name: "Efterklang",
+                      id: "reverbFlag",
+                      invId: "reverbInvFlag",
                     },
-                    { name: 'Eko', id: 'delayFlag', invId: 'delayInvFlag' },
+                    { name: "Eko", id: "delayFlag", invId: "delayInvFlag" },
                   ],
                   spread: true,
                 }}
               />
             </ButtonContainer>
             <ButtonContainer
-              backgroudColor={'#A880AF'}
-              title='Ljudvolym'
+              backgroudColor={"#A880AF"}
+              title="Ljudvolym"
               flex={3}
             >
               <ButtonGroup
                 props={{
                   settings: [
                     {
-                      name: 'Ljudvolym',
-                      id: 'amplitudeFlag',
-                      invId: 'amplitudeInvFlag',
+                      name: "Ljudvolym",
+                      id: "amplitudeFlag",
+                      invId: "amplitudeInvFlag",
                     },
                     {
-                      name: 'Modulation',
-                      id: 'amplitudeModFlag',
-                      invId: 'amplitudeModInvFlag',
+                      name: "Modulation",
+                      id: "amplitudeModFlag",
+                      invId: "amplitudeModInvFlag",
                     },
                     {
-                      name: 'Sustain',
-                      id: 'amplitudeSusFlag',
+                      name: "Sustain",
+                      id: "amplitudeSusFlag",
                       invId: undefined,
                     },
                   ],
@@ -131,10 +214,10 @@ const AudioSettings = () => {
             </ButtonContainer>
             <div
               style={{
-                display: 'flex',
-                width: '10%',
-                justifyContent: 'center',
-                alignContent: 'center',
+                display: "flex",
+                width: "10%",
+                justifyContent: "center",
+                alignContent: "center",
               }}
             >
               <div>
@@ -144,51 +227,51 @@ const AudioSettings = () => {
           </div>
           <div style={row}>
             <ButtonContainer
-              backgroudColor={'#FFBCA7'}
-              title='Harmoni'
+              backgroudColor={"#FFBCA7"}
+              title="Harmoni"
               flex={2}
             >
               <ButtonGroup
                 props={{
                   settings: [
                     {
-                      name: 'Harmoni',
-                      id: 'harmonyFlag',
-                      invId: 'harmonyInvFlag',
+                      name: "Harmoni",
+                      id: "harmonyFlag",
+                      invId: "harmonyInvFlag",
                     },
                     {
-                      name: 'Dur & moll',
-                      id: 'chordFlag',
-                      invId: 'chordInvFlag',
+                      name: "Dur & moll",
+                      id: "chordFlag",
+                      invId: "chordInvFlag",
                     },
                   ],
                   spread: false,
                 }}
               />
             </ButtonContainer>
-            <ButtonContainer backgroudColor={'#FB9891'} title='Brus' flex={3}>
+            <ButtonContainer backgroudColor={"#FB9891"} title="Brus" flex={3}>
               <ButtonGroup
                 props={{
                   settings: [
                     {
-                      name: 'Vitt brus',
-                      id: 'noiseFlag',
-                      invId: 'noiseInvFlag',
-                      type: 'noiseType',
+                      name: "Vitt brus",
+                      id: "noiseFlag",
+                      invId: "noiseInvFlag",
+                      type: "noiseType",
                       val: 0,
                     },
                     {
-                      name: 'Knaster',
-                      id: 'noiseFlag',
-                      invId: 'noiseInvFlag',
-                      type: 'noiseType',
+                      name: "Knaster",
+                      id: "noiseFlag",
+                      invId: "noiseInvFlag",
+                      type: "noiseType",
                       val: 1,
                     },
                     {
-                      name: 'Rosa brus',
-                      id: 'noiseFlag',
-                      invId: 'harmonyInvFlag',
-                      type: 'noiseType',
+                      name: "Rosa brus",
+                      id: "noiseFlag",
+                      invId: "harmonyInvFlag",
+                      type: "noiseType",
                       val: 2,
                     },
                   ],
@@ -197,22 +280,22 @@ const AudioSettings = () => {
               />
             </ButtonContainer>
             <ButtonContainer
-              backgroudColor={'#F28880'}
-              title='Tidaspekter'
+              backgroudColor={"#F28880"}
+              title="Tidaspekter"
               flex={2}
             >
               <ButtonGroup
                 props={{
                   settings: [
                     {
-                      name: 'Attack',
-                      id: 'attackFlag',
-                      invId: 'attackInvFlag',
+                      name: "Attack",
+                      id: "attackFlag",
+                      invId: "attackInvFlag",
                     },
                     {
-                      name: 'Release',
-                      id: 'releaseFlag',
-                      invId: 'releaseInvFlag',
+                      name: "Release",
+                      id: "releaseFlag",
+                      invId: "releaseInvFlag",
                     },
                   ],
                   spread: false,
@@ -220,27 +303,27 @@ const AudioSettings = () => {
               />
             </ButtonContainer>
             <ButtonContainer
-              backgroudColor={'#9ED1F9'}
-              title='Klangfärg'
+              backgroudColor={"#9ED1F9"}
+              title="Klangfärg"
               flex={3}
             >
               <ButtonGroup
                 props={{
                   settings: [
                     {
-                      name: 'Vågform',
-                      id: 'wavemixFlag',
-                      invId: 'wavemixInvFlag',
+                      name: "Vågform",
+                      id: "wavemixFlag",
+                      invId: "wavemixInvFlag",
                     },
                     {
-                      name: 'Pulsbredd',
-                      id: 'pwFlag',
-                      invId: 'pwInvFlag',
+                      name: "Pulsbredd",
+                      id: "pwFlag",
+                      invId: "pwInvFlag",
                     },
                     {
-                      name: 'Distortion',
-                      id: 'clipFlag',
-                      invId: 'clipInvFlag',
+                      name: "Distortion",
+                      id: "clipFlag",
+                      invId: "clipInvFlag",
                     },
                   ],
                   spread: false,
