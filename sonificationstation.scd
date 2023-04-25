@@ -1,7 +1,7 @@
 (
 
 SynthDef(\sonificationVoice, { arg bus, frequency = 440, frequency1 = 440, frequency2 = 440, soundlevel = 0, wavemix = 0, attack = 0.001, release = 0.5, clip = 1, noiselevel = 0, lfoLevel = 1, lfoFreq = 10, timbreMixLevel = 0, sineLevel = 0, triLevel = 0, squareLevel = 0, sawLevel = 0, whiteNoiseLevel = 0, pinkNoiseLevel = 0, crackleNoiseLevel = 0, t_trig = 0, gate = 0, sustain = 0, lpfCutoff = 2500, bpfCutoff = 2500, hpfCutoff = 2500, mixedSoundLevel = 1, lpfLevel = 0, bpfLevel = 0, hpfLevel = 0, pw = 0.5, lagTime = 0.01, filterLag = 0.01;
-	var noise = WhiteNoise.ar(whiteNoiseLevel) + PinkNoise.ar(pinkNoiseLevel) + Dust.ar(440, crackleNoiseLevel);
+	var noise = WhiteNoise.ar(whiteNoiseLevel/5) + PinkNoise.ar(pinkNoiseLevel/5) + Dust.ar(440, crackleNoiseLevel/5);
 	var sine0 = SinOsc.ar(frequency);
 	var sine1 = SinOsc.ar(frequency1);
 	var sine2 = SinOsc.ar(frequency2);
@@ -57,9 +57,27 @@ SynthDef(\sendMouse, {
 
 (
 var data1 = [4.8, 5.7, 7.7, 5.8, 6.7, 6.4, 7.3, 6.0, 5.5, 3.6, 5.1, 5.5, 5.6, 5.9, 6.8, 5.6, 5.1, 4.9, 4.0, 5.4, 5.3, 5.7, 6.5, 5.9, 4.2, 5.2, 6.6, 5.6, 5.7, 5.2, 5.5, 6.1, 6.1, 5.6, 6.6, 5.0, 4.8, 6.8, 7.1, 6.6, 4.9, 5.5, 4.6, 6.7, 4.5, 5.5, 5.4, 3.2, 6.4, 5.6, 5.1, 3.8, 6.9, 6.5, 6.0, 4.4, 4.9, 4.8, 6.3, 4.9, 5.7, 4.2, 6.8, 6.1, 6.1, 5.2, 6.2, 6.2, 4.1, 6.0, 6.5, 6.3, 5.2, 5.1, 7.1, 5.8, 6.9, 6.5, 6.5, 5.8, 5.8, 6.6, 4.3, 6.5, 5.4, 6.2, 6.6, 5.5, 5.8, 5.2, 6.7, 6.9, 5.8, 6.7, 7.3, 4.5, 5.7, 5.3, 6.1, 5.4, 6.9, 6.8, 5.2, 5.1, 5.9, 6.3, 5.8, 5.8, 5.5, 5.8, 7.6, 5.2, 6.7, 6.5, 8.2, 7.0, 7.1, 7.3, 8.1, 7.2, 4.9, 4.8, 4.6, 7.8, 7.2, 7.0, 6.7, 6.3, 7.1, 8.1, 7.1, 7.0, 5.8, 7.8, 6.4, 6.2, 5.2, 6.5, 5.9, 7.8, 6.6, 7.6, 5.7, 6.1, 6.8, 5.8, 5.8, 7.1, 6.6, 6.5, 5.6, 6.9, 7.6, 7.4, 7.7, 8.5, 6.3, 6.5, 6.0, 6.0, 6.1, 6.1, 7.1, 7.6, 7.4, 4.8, 6.2, 5.0, 7.0, 8.5, 8.4, 7.4, 8.0, 7.1, 7.4, 7.2, 6.5, 7.8, 6.9, 8.3, 8.5, 7.6, 8.1, 7.8, 7.6, 8.0, 8.5, 8.2, 8.5, 7.7, 6.0, 8.5, 7.2, 7.8, 8.8, 8.7, 8.2, 8.0, 8.9, 8.6, 9.8];
-var data2 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.076492, 0.079005, 0.084885, 0.088337, 0.096258, 0.097175, 0.103193, 0.106328, 0.102333, 0.105995, 0.126754, 0.181060, 0.175086, 0.192159, 0.188051, 0.184955, 0.190028, 0.191519, 0.210595, 0.110901, 0.018423, 0.019830, 0.015163, 0.020875, 0.011728, 0.054806, 0.161188, 0.172952, 0.184450, 0.201427, 0.252323, 0.303659, 0.357944, 0.444403, 0.506947, 0.610716, 0.708581, 0.802197, 0.904437, 1.000939, 1.230341, 1.337886, 1.443976, 1.507685, 1.604603, 1.710847, 1.810457, 1.905972, 2.007809, 2.108840, 2.210180, 2.309122, 2.411864, 2.450764, 2.500845, 2.609632, 2.704385, 2.804983, 2.703913, 2.756943, 2.749949, 2.759243, 2.765760, 2.769914, 2.909337, 2.952995, 3.005412, 3.159496, 3.354391, 3.506507, 3.553540, 3.415310, 3.386370, 3.510872, 3.527619, 3.554374, 3.570191, 3.570417, 3.602943, 3.653106, 3.757291, 3.832005, 3.903441, 4.005438, 4.101041, 4.204473, 4.310312, 4.372367, 4.425603, 4.559353, 4.643761, 4.711494, 4.784990, 4.842295, 4.882203, 4.915204, 4.955076, 5.000810, 5.051542, 5.103395, 5.111341];
+var data3 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.076492, 0.079005, 0.084885, 0.088337, 0.096258, 0.097175, 0.103193, 0.106328, 0.102333, 0.105995, 0.126754, 0.181060, 0.175086, 0.192159, 0.188051, 0.184955, 0.190028, 0.191519, 0.210595, 0.110901, 0.018423, 0.019830, 0.015163, 0.020875, 0.011728, 0.054806, 0.161188, 0.172952, 0.184450, 0.201427, 0.252323, 0.303659, 0.357944, 0.444403, 0.506947, 0.610716, 0.708581, 0.802197, 0.904437, 1.000939, 1.230341, 1.337886, 1.443976, 1.507685, 1.604603, 1.710847, 1.810457, 1.905972, 2.007809, 2.108840, 2.210180, 2.309122, 2.411864, 2.450764, 2.500845, 2.609632, 2.704385, 2.804983, 2.703913, 2.756943, 2.749949, 2.759243, 2.765760, 2.769914, 2.909337, 2.952995, 3.005412, 3.159496, 3.354391, 3.506507, 3.553540, 3.415310, 3.386370, 3.510872, 3.527619, 3.554374, 3.570191, 3.570417, 3.602943, 3.653106, 3.757291, 3.832005, 3.903441, 4.005438, 4.101041, 4.204473, 4.310312, 4.372367, 4.425603, 4.559353, 4.643761, 4.711494, 4.784990, 4.842295, 4.882203, 4.915204, 4.955076, 5.000810, 5.051542, 5.103395, 5.111341];
+
+var data2 = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+    1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
+    2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0,
+    3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0,
+    4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0,
+    5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0,
+    6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0,
+    7.0, 7.0, 7.0, 7.0, 7.0, 7.0, 7.0, 7.0, 7.0, 7.0,
+    8.0, 8.0, 8.0, 8.0, 8.0, 8.0, 8.0, 8.0, 8.0, 8.0,
+    9.0, 9.0, 9.0, 9.0, 9.0, 9.0, 9.0, 9.0, 9.0, 9.0,
+    10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0,
+    11.0, 11.0, 11.0, 11.0, 11.0, 11.0, 11.0, 11.0, 11.0, 11.0,
+    12.0, 12.0, 12.0, 12.0, 12.0, 12.0, 12.0, 12.0, 12.0, 12.0,
+    13.0, 13.0, 13.0, 13.0, 13.0, 13.0, 13.0, 13.0, 13.0, 13.0,
+    14.0, 14.0, 14.0, 14.0, 14.0, 14.0, 14.0, 14.0, 14.0, 14.0,
+];
 
 var data = data1;
+
 
 var pitchFlag = false;
 var pitchInvFlag = false;
@@ -148,6 +166,7 @@ OSCdef.new(\Dataset,
 		~test = "We got a message!";
 		~test.postln;
 		msg.postln;
+
 		~pitchFlag = msg[2];
 		~pitchInvFlag = msg[3];
 		~pitchQuantFlag = msg[4];
@@ -187,11 +206,17 @@ OSCdef.new(\Dataset,
 		~data2Flag = msg[38];
 		~data2SonFlag = msg[39];
 		~graphValue = msg[40];
+		~dataString = msg[41];
 
-		~pitchFlag.postln;
-		~waveForm.postln;
-		~graphValue.postln;
 
+		~dataString.postln;
+
+	if (~dataString== 1) {
+			~data = data1;
+			} {
+			~data = data2;
+			};
+		~data.postln;
 
 		//Shameless test make on press later
 		~sonificationVoice.set(\t_trig, 1, \gate, 1);
@@ -390,8 +415,6 @@ OSCdef.new(\Dataset,
 
 
 
-
-
 			~sonificationVoice.set(\frequency, ~pitch, \frequency1, ~pitch1, \frequency2, ~pitch2, \soundlevel, ~soundlevel, \wavemix, ~wavemix, \attack, ~attack, \release, ~release, \clip, ~clip, \noiselevel, ~noise, \lfoLevel, ~amplitudeMod, \lfoFreq, ~amplitudeModFreq, \pinkNoiseLevel, ~pinkNoiseLevel, \whiteNoiseLevel, ~whiteNoiseLevel, \crackleNoiseLevel, ~crackleNoiseLevel, \sustain, ~sustain, \timbreMixLevel, ~timbreMixLevel, \sineLevel, ~sineLevel, \triLevel, ~triLevel, \squareLevel, ~squareLevel, \sawLevel, ~sawLevel, \mixedSoundLevel, ~mixedSoundLevel, \lpfLevel, ~lpfLevel, \bpfLevel, ~bpfLevel, \hpfLevel, ~hpfLevel, \lpfCutoff, ~lpfCutoff, \bpfCutoff, ~bpfCutoff, \hpfCutoff, ~hpfCutoff, \pw, ~pw, \lagTime, ~lagTime, \filterLag, ~filterLag);
 			~outputVoice.set(\reverbMix, ~reverbMix, \reverberation, ~reverberation, \delayTime, ~delayTime, \decay, ~decay, \delayLevel, ~delayLevel);
 		};
@@ -405,10 +428,10 @@ OSCdef.new(\Dataset,
 	var lowFreq = 110;
 	var highFreq = 1760;
 	var freq;
-	if (pitchInvFlag) {
-		freq = (lowFreq + highFreq) - linexp(data[position], ~minOfArray.value(data), ~maxOfArray.value(data), lowFreq, highFreq);
+	if (~pitchInvFlag==1) {
+		freq = (lowFreq + highFreq) - linexp(~data[position], ~minOfArray.value(~data), ~maxOfArray.value(~data), lowFreq, highFreq);
 	} {
-		freq = linexp(data[position], ~minOfArray.value(data), ~maxOfArray.value(data), lowFreq, highFreq);
+		freq = linexp(~data[position], ~minOfArray.value(~data), ~maxOfArray.value(~data), lowFreq, highFreq);
 	};
 	if (pitchQuantFlag) {
 		freq = ~mapTones.value(freq);
@@ -438,18 +461,18 @@ OSCdef.new(\Dataset,
 ~mapPitch1 = { arg freq, position;
 	var mappedFreq;
 	var detune;
-	if (chordInvFlag) {
-		detune = linlin(data[position], ~minOfArray.value(data), ~maxOfArray.value(data), 1.2599, 1.1892);
+	if (~chordInvFlag==1) {
+		detune = linlin(~data[position], ~minOfArray.value(~data), ~maxOfArray.value(~data), 1.2599, 1.1892);
 		mappedFreq = freq * detune;
 	} {
-		if (chordFlag) {
-			detune = linlin(data[position], ~minOfArray.value(data), ~maxOfArray.value(data), 1.1892, 1.2599);
+		if (~chordFlag==1) {
+			detune = linlin(~data[position], ~minOfArray.value(~data), ~maxOfArray.value(~data), 1.1892, 1.2599);
 			mappedFreq = freq * detune;
 		} {
-			if (harmonyInvFlag) {
-				mappedFreq = freq * linexp(data[position], ~minOfArray.value(data), ~maxOfArray.value(data), 1.02973, 1);
+			if (~harmonyInvFlag==1) {
+				mappedFreq = freq * linexp(~data[position], ~minOfArray.value(~data), ~maxOfArray.value(~data), 1.02973, 1);
 			} {
-				mappedFreq = freq * linexp(data[position], ~minOfArray.value(data), ~maxOfArray.value(data), 1, 1.02973);
+				mappedFreq = freq * linexp(~data[position], ~minOfArray.value(~data), ~maxOfArray.value(~data), 1, 1.02973);
 			};
 		};
 	};
@@ -461,83 +484,83 @@ OSCdef.new(\Dataset,
 	if (chordFlag) {
 		mappedFreq = freq * detune;
 	} {
-		if (harmonyInvFlag) {
-			mappedFreq = freq * (linexp(data[position], ~minOfArray.value(data), ~maxOfArray.value(data), 1.97027, 2) - 1);
+		if (~harmonyInvFlag==1) {
+			mappedFreq = freq * (linexp(~data[position], ~minOfArray.value(~data), ~maxOfArray.value(~data), 1.97027, 2) - 1);
 		} {
-			mappedFreq = freq * (linexp(data[position], ~minOfArray.value(data), ~maxOfArray.value(data), 2, 1.97027) - 1);
+			mappedFreq = freq * (linexp(~data[position], ~minOfArray.value(~data), ~maxOfArray.value(~data), 2, 1.97027) - 1);
 		};
 	};
 	mappedFreq;
 };
 ~mapAmplitude = { arg position;
 	var level;
-	if (amplitudeInvFlag) {
-		level = 1 - (linexp(data[position], ~minOfArray.value(data), ~maxOfArray.value(data), 1.05, 2) - 1);
+	if (~amplitudeInvFlag==1) {
+		level = 1 - (linexp(~data[position], ~minOfArray.value(~data), ~maxOfArray.value(~data), 1.05, 2) - 1);
 	} {
-		level = linexp(data[position], ~minOfArray.value(data), ~maxOfArray.value(data), 1.05, 2) - 1;
+		level = linexp(~data[position], ~minOfArray.value(~data), ~maxOfArray.value(~data), 1.05, 2) - 1;
 	};
 	level;
 };
 ~mapAmplitudeMod = { arg position;
 	var level;
-	if (amplitudeModInvFlag) {
-		level = linlin(data[position], ~minOfArray.value(data), ~maxOfArray.value(data), 0, 0.75);
+	if (~amplitudeModInvFlag==1) {
+		level = linlin(~data[position], ~minOfArray.value(~data), ~maxOfArray.value(~data), 0, 0.75);
 	} {
-		level = linlin(data[position], ~minOfArray.value(data), ~maxOfArray.value(data), 0.75, 0);
+		level = linlin(~data[position], ~minOfArray.value(~data), ~maxOfArray.value(~data), 0.75, 0);
 	};
 	level;
 };
 ~mapAmplitudeModFreq = { arg position;
 	var freq;
-	if (amplitudeModInvFlag) {
-		freq = linlin(data[position], ~minOfArray.value(data), ~maxOfArray.value(data), 15, 4);
+	if (~amplitudeModInvFlag==1) {
+		freq = linlin(~data[position], ~minOfArray.value(~data), ~maxOfArray.value(~data), 15, 4);
 	} {
-		freq = linlin(data[position], ~minOfArray.value(data), ~maxOfArray.value(data), 4, 15);
+		freq = linlin(~data[position], ~minOfArray.value(~data), ~maxOfArray.value(~data), 4, 15);
 	};
 	freq;
 };
 ~mapWavemix = { arg position;
 	var mixlevel;
-	if (wavemixInvFlag) {
-		mixlevel = 1 - (linexp(data[position], ~minOfArray.value(data), ~maxOfArray.value(data), 1, 2) - 1);
+	if (~wavemixInvFlag==1) {
+		mixlevel = 1 - (linexp(~data[position], ~minOfArray.value(~data), ~maxOfArray.value(~data), 1, 2) - 1);
 	} {
-		mixlevel = linexp(data[position], ~minOfArray.value(data), ~maxOfArray.value(data), 1, 2) - 1;
+		mixlevel = linexp(~data[position], ~minOfArray.value(~data), ~maxOfArray.value(~data), 1, 2) - 1;
 	};
 	mixlevel;
 };
 ~mapPw = { arg position;
 	var pw;
-	if (pwInvFlag) {
-		pw = 1 - (linexp(data[position], ~minOfArray.value(data), ~maxOfArray.value(data), 1.95, 1.5) - 1);
+	if (~pwInvFlag==1) {
+		pw = 1 - (linexp(~data[position], ~minOfArray.value(~data), ~maxOfArray.value(~data), 1.95, 1.5) - 1);
 	} {
-		pw = linexp(data[position], ~minOfArray.value(data), ~maxOfArray.value(data), 1.5, 1.95) - 1;
+		pw = linexp(~data[position], ~minOfArray.value(~data), ~maxOfArray.value(~data), 1.5, 1.95) - 1;
 	};
 	pw;
 };
 ~mapAttack = { arg position;
 	var attackTime;
-	if (attackInvFlag) {
-		attackTime = 0.5 - (linlin(data[position], ~minOfArray.value(data), ~maxOfArray.value(data), 1.0001, 1.5) - 1);
+	if (~attackInvFlag==1) {
+		attackTime = 0.5 - (linlin(~data[position], ~minOfArray.value(~data), ~maxOfArray.value(~data), 1.0001, 1.5) - 1);
 	} {
-		attackTime = linlin(data[position], ~minOfArray.value(data), ~maxOfArray.value(data), 1.0001, 1.5) - 1;
+		attackTime = linlin(~data[position], ~minOfArray.value(~data), ~maxOfArray.value(~data), 1.0001, 1.5) - 1;
 	};
 	attackTime;
 };
 ~mapRelease = { arg position;
 	var releaseTime;
-	if (releaseInvFlag) {
-		releaseTime = 1 - (linlin(data[position], ~minOfArray.value(data), ~maxOfArray.value(data), 1.5, 5) - 1);
+	if (~releaseInvFlag==1) {
+		releaseTime = 1 - (linlin(~data[position], ~minOfArray.value(~data), ~maxOfArray.value(~data), 1.5, 5) - 1);
 	} {
-		releaseTime = linlin(data[position], ~minOfArray.value(data), ~maxOfArray.value(data), 1.1, 3) - 1;
+		releaseTime = linlin(~data[position], ~minOfArray.value(~data), ~maxOfArray.value(~data), 1.1, 3) - 1;
 	};
 	releaseTime;
 };
 ~mapClip = { arg position;
 	var clip;
-	if (clipInvFlag) {
-		clip = 1 - (linexp(data[position], ~minOfArray.value(data), ~maxOfArray.value(data), 2, 1.1) - 1);
+	if (~clipInvFlag==1) {
+		clip = 1 - (linexp(~data[position], ~minOfArray.value(~data), ~maxOfArray.value(~data), 2, 1.1) - 1);
 	} {
-		clip = linexp(data[position], ~minOfArray.value(data), ~maxOfArray.value(data), 2, 1.1) - 1;
+		clip = linexp(~data[position], ~minOfArray.value(~data), ~maxOfArray.value(~data), 2, 1.1) - 1;
 	};
 	clip;
 };
@@ -545,10 +568,10 @@ OSCdef.new(\Dataset,
 	var lpfCutoff;
 	var lowFreq = 100;
 	var highFreq = 10000;
-	if (lpfInvFlag) {
-		lpfCutoff = (lowFreq + highFreq) - linexp(data[position], ~minOfArray.value(data), ~maxOfArray.value(data), lowFreq, highFreq);
+	if (~lpfInvFlag==1) {
+		lpfCutoff = (lowFreq + highFreq) - linexp(~data[position], ~minOfArray.value(~data), ~maxOfArray.value(~data), lowFreq, highFreq);
 	} {
-		lpfCutoff = linexp(data[position], ~minOfArray.value(data), ~maxOfArray.value(data), lowFreq, highFreq);
+		lpfCutoff = linexp(~data[position], ~minOfArray.value(~data), ~maxOfArray.value(~data), lowFreq, highFreq);
 	};
 	lpfCutoff;
 };
@@ -556,10 +579,10 @@ OSCdef.new(\Dataset,
 	var bpfCutoff;
 	var lowFreq = 100;
 	var highFreq = 10000;
-	if (bpfInvFlag) {
-		bpfCutoff = (lowFreq + highFreq) - linexp(data[position], ~minOfArray.value(data), ~maxOfArray.value(data), lowFreq, highFreq);
+	if (~bpfInvFlag==1) {
+		bpfCutoff = (lowFreq + highFreq) - linexp(~data[position], ~minOfArray.value(~data), ~maxOfArray.value(~data), lowFreq, highFreq);
 	} {
-		bpfCutoff = linexp(data[position], ~minOfArray.value(data), ~maxOfArray.value(data), lowFreq, highFreq);
+		bpfCutoff = linexp(~data[position], ~minOfArray.value(~data), ~maxOfArray.value(~data), lowFreq, highFreq);
 	};
 	bpfCutoff;
 };
@@ -567,46 +590,46 @@ OSCdef.new(\Dataset,
 	var hpfCutoff;
 	var lowFreq = 100;
 	var highFreq = 10000;
-	if (hpfInvFlag) {
-		hpfCutoff = (lowFreq + highFreq) - linexp(data[position], ~minOfArray.value(data), ~maxOfArray.value(data), lowFreq, highFreq);
+	if (~hpfInvFlag==1) {
+		hpfCutoff = (lowFreq + highFreq) - linexp(~data[position], ~minOfArray.value(~data), ~maxOfArray.value(~data), lowFreq, highFreq);
 	} {
-		hpfCutoff = linexp(data[position], ~minOfArray.value(data), ~maxOfArray.value(data), lowFreq, highFreq);
+		hpfCutoff = linexp(~data[position], ~minOfArray.value(~data), ~maxOfArray.value(~data), lowFreq, highFreq);
 	};
 	hpfCutoff;
 };
 ~mapreverbMix = { arg position;
 	var level;
-	if (reverbInvFlag) {
-		level = linexp(data[position], ~minOfArray.value(data), ~maxOfArray.value(data), 1.5, 1) - 1;
+	if (~reverbInvFlag==1) {
+		level = linexp(~data[position], ~minOfArray.value(~data), ~maxOfArray.value(~data), 1.5, 1) - 1;
 	} {
-		level = linexp(data[position], ~minOfArray.value(data), ~maxOfArray.value(data), 1, 1.5) - 1;
+		level = linexp(~data[position], ~minOfArray.value(~data), ~maxOfArray.value(~data), 1, 1.5) - 1;
 	};
 	level;
 };
 ~mapreverberation = { arg position;
 	var level;
-	if (reverbInvFlag) {
-		level = linexp(data[position], ~minOfArray.value(data), ~maxOfArray.value(data), 2, 1.5) - 1;
+	if (~reverbInvFlag==1) {
+		level = linexp(~data[position], ~minOfArray.value(~data), ~maxOfArray.value(~data), 2, 1.5) - 1;
 	} {
-		level = linexp(data[position], ~minOfArray.value(data), ~maxOfArray.value(data), 1.5, 2) - 1;
+		level = linexp(~data[position], ~minOfArray.value(~data), ~maxOfArray.value(~data), 1.5, 2) - 1;
 	};
 	level;
 };
 ~mapdelayTime = { arg position;
 	var level;
-	if (delayInvFlag) {
-		level = linexp(data[position], ~minOfArray.value(data), ~maxOfArray.value(data), 1.5, 1.01) - 1;
+	if (~delayInvFlag==1) {
+		level = linexp(~data[position], ~minOfArray.value(~data), ~maxOfArray.value(~data), 1.5, 1.01) - 1;
 	} {
-		level = linexp(data[position], ~minOfArray.value(data), ~maxOfArray.value(data), 1.01, 1.5) - 1;
+		level = linexp(~data[position], ~minOfArray.value(~data), ~maxOfArray.value(~data), 1.01, 1.5) - 1;
 	};
 	level;
 };
 ~mapdecay = { arg position;
 	var level;
-	if (delayInvFlag) {
-		level = linlin(data[position], ~minOfArray.value(data), ~maxOfArray.value(data), 1.75, 1.3) - 1;
+	if (~delayInvFlag==1) {
+		level = linlin(~data[position], ~minOfArray.value(~data), ~maxOfArray.value(~data), 1.75, 1.3) - 1;
 	} {
-		level = linlin(data[position], ~minOfArray.value(data), ~maxOfArray.value(data), 1.3, 1.75) - 1;
+		level = linlin(~data[position], ~minOfArray.value(~data), ~maxOfArray.value(~data), 1.3, 1.75) - 1;
 	};
 	level;
 };
